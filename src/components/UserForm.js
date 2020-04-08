@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import FoodSelect from './FoodSelect'
 import FriendSelect from './FriendSelect'
+import FindButton from './FindButton'
 
 
 
@@ -8,7 +9,7 @@ export class UserForm extends Component {
 
     state = {
         step: 0,
-        foodTypes: [],
+        foodTypes: '',
         lastName: '',
         email: '',
         occupation: '',
@@ -39,10 +40,6 @@ export class UserForm extends Component {
         this.setState({[input]: e.target.value})
     }
 
-    addToList = input => e => {
-        this.setState({})
-    }
-
     render() {
         const { step } = this.state
         const { firstName, lastName, email, occupation, city, bio} = this.state
@@ -51,13 +48,21 @@ export class UserForm extends Component {
         switch(step) {
             case 0:
                 return (
-                    <FoodSelect
+                    <FindButton
                         nextStep={this.nextStep}
                         handleChange={this.handleChange}
                         values={values}
                     />
                 )
             case 1:
+                return (
+                    <FoodSelect
+                        nextStep={this.nextStep}
+                        handleChange={this.handleChange}
+                        values={values}
+                    />
+                )
+            case 2:
                 return (
                     <FriendSelect
                         nextStep={this.nextStep}
@@ -66,9 +71,9 @@ export class UserForm extends Component {
                         values={values}
                     />
                 )
-            case 2:
-                return <h1>Confirm</h1>
             case 3:
+                return <h1>Confirm</h1>
+            case 4:
                 return <h1>Success!</h1>
 
         }
