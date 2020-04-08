@@ -221,17 +221,19 @@ router.get('/getFriends/:id', checkAuth, (req, res, next) => {
         .catch(err => res.status(400).json('Error: ' + err));
 });
 
-// This endpoint will delete the a friend from the user's friends list
-router.delete('/deleteFriend', checkAuth, (req, res, next) => {
-    const username = req.body.username;
-    const friendUsername = req.body.friendUsername;
+// This endpoint will delete a friend from the user's friends list
+router.delete('/deleteFriend/:id', checkAuth, (req, res, next) => {
+    // Extract the 'userId' and the 'friendsId' from the parameters list.
+    // NOTE: The 'userId' should always be first in the URL followed by the
+    // 'friendsId', and they should be separated by a '&'
+    const parameters = req.params.id.split("&")
 
     // Find the specific user whose friend is to be removed
-    User.findOne({username: username})
+    User.findOne({username: parameters[0]})
         .then(response => {
             // Once the user is found, go into the friends array and remove the
             // friend
-            response.friends.pop(friendUsername);
+            response.friends.pop(parameters[1]);
 
             // Make sure the changes to the database are saved to reflect the
             // new state
