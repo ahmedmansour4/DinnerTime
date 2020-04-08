@@ -1,3 +1,6 @@
+// When making a call to this router using something like 'axios', you would
+// call 'http://localhost:5000/users/' or 'http://localhost:5000/users/login'
+
 const router = require('express').Router();
 // bcrypt is what is used to hash the user's password
 const bcrypt = require('bcrypt');
