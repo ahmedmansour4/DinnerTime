@@ -1,3 +1,6 @@
+// When making a call to this router using something like 'axios', you would
+// call 'http://localhost:5000/events/' or 'http://localhost:5000/events/addEvent/:id'
+
 const router = require('express').Router();
 
 // Pull in the middleware that will be used to check the authorization of the
@@ -18,25 +21,23 @@ router.get('/', checkAuth, (req, res, next) => {
 });
 
 // Use this endpoint to create and add an event to the DinnerTime database
-router.post('/addEvent/', checkAuth, (req, res, next) => {
+router.post('/addEvent', checkAuth, (req, res, next) => {
     // Extract the all of the event info from the body of the request
     const eventOwnerUsername = req.body.eventOwnerUsername;
     const description = req.body.description;
     const restaurant = req.body.restaurant;
-    const attendees = req.body.attendees;
     const timeOfEvent = req.body.timeOfEvent;
     const duration = req.body.duration;
     const date = Date.parse(req.body.date);
 
     // Create a new event using the 'Event' model schema
     const newEvent = new Event({
-        eventOwnerUsername,
-        description,
-        restaurant,
-        attendees,
-        timeOfEvent,
-        duration,
-        date,
+        eventOwnerUsername: eventOwnerUsername,
+        description: description,
+        restaurant: restaurant,
+        timeOfEvent: timeOfEvent,
+        duration: duration,
+        date: date,
     });
 
     // Finally save the new event to the database
@@ -45,8 +46,12 @@ router.post('/addEvent/', checkAuth, (req, res, next) => {
         .catch(err => res.status(400).json('Error: ' + err));
 });
 
-router.put('/addAttendee/:id', (req, res, next) => {
-    const parameters = req.params.id.spli("&");
+// This endpoint will add attendees for a specified event.
+router.put('/addAttendee/:id', checkAuth, (req, res, next) => {
+    // Extract the 'userId' and 'eventId' from the parameters list.
+    // NOTE: The 'userId' should alwasy be sent first in the URL followed by the
+    // 'eventId' and they should be separated by a '&'
+    const parameters = req.params.id.split("&");
 
     Event.findOne({_id: parameters[1]})
         .then(response => {
