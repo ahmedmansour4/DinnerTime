@@ -5,7 +5,7 @@ const jwt = require('jsonwebtoken'); // Used to verify json web token
 module.exports = (req, res, next) => {
     try {
         // Extract the token from the header
-        const token = req.headers.authorization.split(" ")[1];
+        const token = req.headers.authorization;
         const decoded = jwt.verify(token, process.env.JWT_KEY);
         req.userData = decoded;
         next();
