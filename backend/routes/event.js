@@ -16,6 +16,7 @@ router.get('/', checkAuth, (req, res, next) => {
     // Use the 'Event' model to query the database and find all events within
     // the database
     Event.find()
+        .populate('attendees', 'name')
         .then(event => res.json(event))
         .catch(err => res.status(400).json('Error: ' +  err));
 });
@@ -55,10 +56,32 @@ router.put('/addAttendee/:id', checkAuth, (req, res, next) => {
 
     Event.findOne({_id: parameters[1]})
         .then(response => {
+            // Push the attendee on to the 'attendees' array
             response.attendees.push(parameters[0]);
 
+            // Save the changes to the database
             response.save()
                 .then(() => res.status(200).json('Attendee added!'))
+                .catch(err => res.status(400).json('Error: ' + err));
+        })
+        .catch(err => res.status(400).json('Error: ' + err));
+});
+
+// This endpoint will delete an event from the DinnerTime database.
+router.delete('/deleteAttendee/:id', checkAuth, (req, res, next) => {
+    // Extract the 'userId' and 'eventId' from the parameters list.
+    // NOTE: The 'userId' should always be sent first in the URL followed by the
+    // 'eventId' and they should be separated by a '&'
+    const parameters = req.params.id.split('&');
+
+    Event.findOne({_id: parameters[1]})
+        .then(response => {
+            // Pop an attendee from the 'attendess' array
+            response.attendees.pop(parameters[0])
+
+            // Save the changes to the database
+            response.save()
+                .then(() => res.status(200).json('Attendee removed'))
                 .catch(err => res.status(400).json('Error: ' + err));
         })
         .catch(err => res.status(400).json('Error: ' + err));
@@ -85,10 +108,6 @@ router.post('/updateEvent/:id', checkAuth, (req, res, next) => {
                     response.restaurant = req.body.restaurant;
                 }
 
-                if (req.body.attendees) {
-                    response.attendees = req.body.attendees;
-                }
-
                 if (req.body.timOfEvent) {
                     response.timeOfEvent = req.body.duration;
                 }
@@ -97,7 +116,7 @@ router.post('/updateEvent/:id', checkAuth, (req, res, next) => {
                     response.duration = req.body.duration;
                 }
 
-                if (Date.parse(req.body.date)) {
+                if (req.body.date) {
                     response.date = Date.parse(req.body.date);
                 }
 
