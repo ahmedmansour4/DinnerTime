@@ -1,15 +1,23 @@
 import React, { Component } from 'react'
 
-import { makeStyles } from '@material-ui/core/styles';
-import {AppBar, MuiThemeProvider, Checkbox, Avatar} from '@material-ui/core'
-import {List, ListItem, ListItemSecondaryAction, ListItemText, ListItemAvatar } from '@material-ui/core'
+import Grid from '@material-ui/core/Grid'
 
-export class FriendSelect extends Component {
+import { Button, Typography } from '@material-ui/core'
+import FriendCard from './FriendCard'
+import { makeStyles } from '@material-ui/styles'
 
-    
+import yankee from './img/yankee.jpg'
+import obamaPrism from './img/obama-prism.jpg'
+import obamaSphere from './img/obama-sphere.png'
 
+const useStyles = makeStyles(() => ({
+    typographyStyles: {
+        flex: 1
+    }
+}));
+  
 
-
+export class FoodSelect extends Component {
 
     continue = e => {
         e.preventDefault()
@@ -22,57 +30,73 @@ export class FriendSelect extends Component {
     }
 
     render() {
-        const classes = useStyles();
-  const [checked, setChecked] = React.useState([1]);
+        const { handleChange } = this.props
 
-  const handleToggle = (value) => () => {
-    const currentIndex = checked.indexOf(value);
-    const newChecked = [...checked];
-
-    if (currentIndex === -1) {
-      newChecked.push(value);
-    } else {
-      newChecked.splice(currentIndex, 1);
-    }
-
-    setChecked(newChecked);
-  };
-
-  return (
-    <List dense className={classes.root}>
-      {[0, 1, 2, 3].map((value) => {
-        const labelId = `checkbox-list-secondary-label-${value}`;
         return (
-          <ListItem key={value} button>
-            <ListItemAvatar>
-              <Avatar
-                alt={`Avatar n°${value + 1}`}
-                src={`/static/images/avatar/${value + 1}.jpg`}
-              />
-            </ListItemAvatar>
-            <ListItemText id={labelId} primary={`Line item ${value + 1}`} />
-            <ListItemSecondaryAction>
-              <Checkbox
-                edge="end"
-                onChange={handleToggle(value)}
-                checked={checked.indexOf(value) !== -1}
-                inputProps={{ 'aria-labelledby': labelId }}
-              />
-            </ListItemSecondaryAction>
-          </ListItem>
-        );
-      })}
-    </List>
-  );
+			
+            <Grid container
+                direction='column'
+                justify='center'
+                alignItems='center'
+                spacing={3}
+            >
+                <Grid item />
+                
+                <Grid item container spacing={3} justify='center'>
+                         <Grid item xs={12} sm={7}>
+                         <Typography variant='h5' align='center' className={useStyles.typographyStyles}>
+                            Select who you want to invite.
+                        </Typography>
+                        </Grid>
+
+						{/* Friend Cards */}
+						<Grid item xs={12} sm={6} lg={2}>
+							<FriendCard image={yankee} name='Yankee With No Brim'/>
+						</Grid>
+						<Grid item xs={12} sm={6} lg={2}>
+							<FriendCard image={yankee} name='Barack Obama'/>
+						</Grid>
+						<Grid item xs={12} sm={6} lg={2}>
+							<FriendCard image={obamaSphere} name='Obama Sphere'/>
+						</Grid>
+						<Grid item xs={12} sm={6} lg={2}>
+							<FriendCard image={obamaPrism} name='Obama Prism'/>
+						</Grid>
+
+
+                        {/* Next and Back Buttons */}
+                        <Grid item container xs={12} 
+                            justify='center'
+                            alignItems='stretch'
+                            spacing={3}
+                        >        
+                                <Grid item xs={6} sm={4}>
+                                <Button 
+                                    variant='contained'
+                                    color="secondary"
+                                    fullWidth={true}
+                                    onClick={this.goBack}
+                                >
+                                    Back
+                                </Button>
+                                </Grid>
+
+                                <Grid item xs={6} sm={4}>
+                                <Button 
+                                    variant='contained'
+                                    color="secondary"
+                                    fullWidth={true}
+                                    onClick={this.continue}
+                                >
+                                    Next
+                                </Button>
+                                </Grid>
+                        </Grid>
+                </Grid>
+            </Grid>
+        )
     }
 }
 
-const useStyles = makeStyles((theme) => ({
-    root: {
-      width: '100%',
-      maxWidth: 360,
-      backgroundColor: theme.palette.background.paper,
-    },
-}));
 
-export default FriendSelect
+export default FoodSelect

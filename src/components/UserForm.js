@@ -9,7 +9,7 @@ import FriendSelect from './FriendSelect'
 export class UserForm extends Component {
 
     state = {
-        step: 2,
+        step: 1,
         foodTypes: '',
         lastName: '',
         email: '',
@@ -59,6 +59,7 @@ export class UserForm extends Component {
                 return (
                     <FindFood
                         nextStep={this.nextStep}
+                        prevStep={this.prevStep}
                         handleChange={this.handleChange}
                         values={values}
                     />
@@ -67,6 +68,7 @@ export class UserForm extends Component {
                 return (
                     <FoodSelect
                         nextStep={this.nextStep}
+                        prevStep={this.prevStep}
                         handleChange={this.handleChange}
                         values={values}
                     />

@@ -9,11 +9,6 @@ import { makeStyles } from '@material-ui/styles'
 const useStyles = makeStyles(() => ({
     typographyStyles: {
         flex: 1
-    },
-    button: {
-        variant: 'contained',
-        color: "secondary",
-        fullWidth: true
     }
 }));
 
@@ -33,6 +28,7 @@ export class FoodSelect extends Component {
         const { handleChange } = this.props
 
         return (
+            
             <Grid container
                 direction='column'
                 justify='center'
@@ -48,6 +44,8 @@ export class FoodSelect extends Component {
                         </Typography>
                         </Grid>
 
+
+                        {/* List of Food Types */}
                         <Grid item xs={12} sm={7}>
                         <Button
                             variant='contained'
@@ -77,18 +75,23 @@ export class FoodSelect extends Component {
                             onChange={handleChange('foodTypes')}
                             fullWidth={true}
                         >
+        
                             Mexican
                         </Button>
                         </Grid>
 
-                        <Grid item container xs={6}  justify='center' spacing={3}>
-                                
+                        {/* Next and Back Buttons */}
+                        <Grid item container xs={12} 
+                            justify='center'
+                            alignItems='stretch'
+                            spacing={3}
+                        >        
                                 <Grid item xs={6} sm={4}>
                                 <Button 
                                     variant='contained'
                                     color="secondary"
-                                    onChange={handleChange('foodTypes')}
                                     fullWidth={true}
+                                    onClick={this.goBack}
                                 >
                                     Back
                                 </Button>
@@ -98,8 +101,8 @@ export class FoodSelect extends Component {
                                 <Button 
                                     variant='contained'
                                     color="secondary"
-                                    onChange={handleChange('foodTypes')}
                                     fullWidth={true}
+                                    onClick={this.continue}
                                 >
                                     Next
                                 </Button>

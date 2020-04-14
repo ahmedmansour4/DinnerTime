@@ -57,6 +57,7 @@ export class FindFood extends Component {
                             color="secondary"
                             onChange={handleChange('foodTypes')}
                             fullWidth={true}
+                            onClick={this.continue}
                         >
                             Random
                         </Button>
