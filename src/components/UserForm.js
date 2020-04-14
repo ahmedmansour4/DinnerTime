@@ -9,7 +9,7 @@ import FriendSelect from './FriendSelect'
 export class UserForm extends Component {
 
     state = {
-        step: 1,
+        step: 0,
         foodTypes: '',
         lastName: '',
         email: '',
