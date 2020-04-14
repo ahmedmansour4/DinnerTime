@@ -1,33 +1,29 @@
 import React, { Component } from 'react';
-import UserForm from './components/UserForm';
 
-//import './App.css';
+import Grid from '@material-ui/core/Grid'
+
+// Custom Components
+import UserForm from './components/UserForm';
+import Header from './Header'
 
 class App extends Component {
-
-/*
-	toggleCheck = (id) => {
-		console.log(id)
-		this.setState({todos: this.state.todos.map(todo => {
-			if (todo.id === id) {
-				todo.checked = !todo.checked
-			}
-			return todo
-		})})
-	}
-*/
-
   render() {
     return (
-        <div 
-          style={{
-            display: "block",
-            
-            
-          }}
-        >
+      <Grid container direction='column'>
+        <Grid item>
+            <Header />
+        </Grid>
+
+        <Grid item container>
+          <Grid item xs={0} sm={2} />
+
+          <Grid item xs={12}>
             <UserForm />
-        </div>
+          </Grid>
+
+          <Grid item xs={0} sm={2} />
+        </Grid>
+      </Grid>
     );
   }
 }

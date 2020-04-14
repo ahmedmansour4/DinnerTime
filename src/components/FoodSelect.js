@@ -1,8 +1,24 @@
 import React, { Component } from 'react'
 
-import {AppBar, MuiThemeProvider, Button} from '@material-ui/core'
+import Grid from '@material-ui/core/Grid'
+
+import { Button, Typography} from '@material-ui/core'
+import { makeStyles } from '@material-ui/styles'
+
+
+const useStyles = makeStyles(() => ({
+    typographyStyles: {
+        flex: 1
+    },
+    button: {
+        variant: 'contained',
+        color: "secondary",
+        fullWidth: true
+    }
+}));
 
 export class FoodSelect extends Component {
+
     continue = e => {
         e.preventDefault()
         this.props.nextStep()
@@ -14,67 +30,83 @@ export class FoodSelect extends Component {
     }
 
     render() {
-        const {values, handleChange} = this.props
-        
-        return (
-            <MuiThemeProvider>
-                <React.Fragment>
-                    <AppBar position='static'>
-                        <div>What do you want to eat?</div>
-                    </AppBar>
-                    <Button 
-                        variant='contained'
-                        color="primary"
-                        onChange={handleChange('foodTypes')}
-                        onClick={this.continue}
-                    >
-                        Chinese
-                    </Button>
-                    <br/>
-                    <Button 
-                        variant='contained'
-                        color="primary"
-                        onChange={handleChange('foodTypes')}
-                        onClick={this.continue}
-                    >
-                        American
-                    </Button>
-                    <br/>
-                    <Button 
-                        variant='contained'
-                        color="primary"
-                        onChange={handleChange('foodTypes')}
-                        onClick={this.continue}
-                    >
-                        Thai
-                    </Button>
-                    <br/>
-                    <Button 
-                        variant='contained'
-                        color="primary"
-                        onChange={handleChange('foodTypes')}
-                        onClick={this.continue}
-                    >
-                        Italian
-                    </Button>
-                    <br/>
+        const { handleChange } = this.props
 
-                    <Button 
-                        variant="contained"
-                        color="secondary"
-                        onClick={this.continue}
-                    >
-                        NEXT
-                    </Button>
-                    <Button 
-                        variant="contained"
-                        color="primary"
-                        onClick={this.goBack}
-                    >
-                        BACK
-                    </Button>
-                </React.Fragment>
-            </MuiThemeProvider>
+        return (
+            <Grid container
+                direction='column'
+                justify='center'
+                alignItems='center'
+                spacing={3}
+            >
+                <Grid item />
+                
+                <Grid item container spacing={3} justify='center'>
+                         <Grid item xs={12} sm={7}>
+                         <Typography variant='h5' align='center' className={useStyles.typographyStyles}>
+                            Select what type of food you want.
+                        </Typography>
+                        </Grid>
+
+                        <Grid item xs={12} sm={7}>
+                        <Button
+                            variant='contained'
+                            color="secondary"
+                            onChange={handleChange('foodTypes')}
+                            fullWidth={true}
+                        >
+                            Chinese
+                        </Button>
+                        </Grid>
+
+                        <Grid item xs={12} sm={7}>
+                        <Button 
+                            variant='contained'
+                            color="secondary"
+                            onChange={handleChange('foodTypes')}
+                            fullWidth={true}
+                        >
+                            American
+                        </Button>
+                        </Grid>
+
+                        <Grid item xs={12} sm={7}>
+                        <Button 
+                            variant='contained'
+                            color="secondary"
+                            onChange={handleChange('foodTypes')}
+                            fullWidth={true}
+                        >
+                            Mexican
+                        </Button>
+                        </Grid>
+
+                        <Grid item container xs={6}  justify='center' spacing={3}>
+                                
+                                <Grid item xs={6} sm={4}>
+                                <Button 
+                                    variant='contained'
+                                    color="secondary"
+                                    onChange={handleChange('foodTypes')}
+                                    fullWidth={true}
+                                >
+                                    Back
+                                </Button>
+                                </Grid>
+
+                                <Grid item xs={6} sm={4}>
+                                <Button 
+                                    variant='contained'
+                                    color="secondary"
+                                    onChange={handleChange('foodTypes')}
+                                    fullWidth={true}
+                                >
+                                    Next
+                                </Button>
+                                </Grid>
+                        </Grid>
+                </Grid>
+            </Grid>
         )
     }
 }
