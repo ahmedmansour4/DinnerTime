@@ -80,11 +80,11 @@ router.post('/login', (req, res, next) => {
                     message: 'Authorization Unsuccessful'
                 });
             }
-            else if (!user[0].emailConfirmed) {
-                return res.status(401).json({
-                    message: 'Authorization Unsuccessful, confirm email'
-                });
-            }
+//             else if (!user[0].emailConfirmed) {
+//                 return res.status(401).json({
+//                     message: 'Authorization Unsuccessful, confirm email'
+//                 });
+//             }
 
             // 'bcrypt.compare' will verify if the password entered by the user
             // and password stored in the database match. It will return true
