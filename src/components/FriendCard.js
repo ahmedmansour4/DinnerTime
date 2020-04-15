@@ -15,12 +15,12 @@ export class FriendCard extends Component {
     
     render() {
 
-        const { image, name, isChecked } = this.props
+        const { image, name } = this.props
 
         return (
                 <Card>
                     <CardHeader
-                        avatar={<Avatar src={ image }/>}
+                        avatar={<Avatar>{name.charAt(0).toUpperCase()}</Avatar>}
                         title={<Typography align='center' variant='h5'>{name}</Typography>}
                         action={<Checkbox />}
                     />

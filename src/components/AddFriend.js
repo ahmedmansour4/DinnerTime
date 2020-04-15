@@ -1,35 +1,31 @@
 import React, { Component } from 'react'
 
+
 import Grid from '@material-ui/core/Grid'
 
-import { Button, Typography} from '@material-ui/core'
-import Fastfood from '@material-ui/icons/Fastfood'
+import { Button, Typography } from '@material-ui/core'
 import { makeStyles } from '@material-ui/styles'
 
+import TextField from '@material-ui/core/TextField'
 
-const useStyles = makeStyles((theme) => ({
-    root: {
-      flexGrow: 1,
-    },
 
-  }));
-  
+const useStyles = makeStyles(() => ({
+    typographyStyles: {
+        flex: 1
+    }
+}));
 
-export class FindFood extends Component {
+export class AddFriend extends Component {
+
+    // Add functions here
 
     continue = e => {
         e.preventDefault()
         this.props.nextStep()
     }
 
-    goToAddFriends = e => {
-        e.preventDefault()
-        this.props.goToAddFriends()
-    }
-    
-    render() {
-        const {values, handleChange} = this.props
 
+    render() {
         return (
             <Grid container
                 direction='column'
@@ -39,43 +35,42 @@ export class FindFood extends Component {
             >
                 <Grid item />
                 
-                <Grid item container spacing={3} justify='center'>
+                <Grid item container spacing={3} justify='center' alignItems='center' direction='column'>
                          <Grid item xs={12} sm={7}>
                          <Typography variant='h3' align='center' className={useStyles.typographyStyles}>
-                            Welcome to Dinner Time!
+                            Add a new friend.
                         </Typography>
                         </Grid>
 
-                        <Grid item xs={12} sm={7}>
+                        <Grid item xs={6}>
+                            <TextField
+                                required
+                                id="outlined-required"
+                                label="Username"
+                                variant="outlined"
+                                fullWidth={true}
+                            />
+                        </Grid>
+
+                        <Grid item xs={12} sm={6}>
                         <Button 
                             variant='contained'
                             color="secondary"
                             fullWidth={true}
-                            onClick={this.continue}
+                            onClick={this.addFriend}
                         >
-                            <Fastfood />
+                            Confirm
                         </Button>
                         </Grid>
 
-                        <Grid item xs={12} sm={7}>
-                        <Button 
-                            variant='contained'
-                            color="secondary"
-                            onChange={handleChange('foodTypes')}
-                            fullWidth={true}
-                            onClick={this.continue}
-                        >
-                            Random
-                        </Button>
-                        </Grid>
-                        <Grid item xs={12} sm={7}>
+                        <Grid item xs={12} sm={6}>
                         <Button 
                             variant='contained'
                             color="secondary"
                             fullWidth={true}
-                            onClick={this.goToAddFriends}
+                            onClick={this.goToFind}
                         >
-                            Add Friend
+                            Cancel
                         </Button>
                         </Grid>
                 </Grid>
@@ -84,4 +79,4 @@ export class FindFood extends Component {
     }
 }
 
-export default FindFood
+export default AddFriend

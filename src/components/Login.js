@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-
+import axios from 'axios'
 
 import Grid from '@material-ui/core/Grid'
 
@@ -17,7 +17,36 @@ const useStyles = makeStyles(() => ({
 
 export class Login extends Component {
 
-    // Add functions here
+    constructor(props) {
+        super(props);
+    
+        this.state = {
+            username: '',
+            password: ''
+        }
+
+        this.tryLogin = this.tryLogin.bind(this);
+    }
+
+    handleChange = input => event => {
+        this.setState( {[input]: event.target.value })
+    }
+
+    tryLogin() {
+
+        const loginData = {
+            username: this.state.username,
+            password: this.state.password
+        }
+
+        axios.post('http://localhost:5000/users/login', loginData)
+            .then(results => {
+                console.log(results)
+            })
+            .catch(err => {
+                console.log(err)
+            })
+    }
 
     continue = e => {
         e.preventDefault()
@@ -52,6 +81,7 @@ export class Login extends Component {
                                 id="outlined-required"
                                 label="Username"
                                 variant="outlined"
+                                onChange={ this.props.handleChange }
                                 fullWidth={true}
                             />
                         </Grid>
@@ -62,6 +92,7 @@ export class Login extends Component {
                                 id="outlined-required"
                                 label="Password"
                                 type='password'
+                                onChange={ this.props.handleChange }
                                 variant="outlined"
                                 fullWidth={true}
                             />
@@ -72,7 +103,7 @@ export class Login extends Component {
                             variant='contained'
                             color="secondary"
                             fullWidth={true}
-                            onClick={this.continue}
+                            onClick={this.tryLogin}
                         >
                             Login
                         </Button>

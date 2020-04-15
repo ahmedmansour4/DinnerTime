@@ -30,8 +30,7 @@ export class FoodSelect extends Component {
     }
 
     render() {
-        const { handleChange } = this.props
-
+        const { values } = this.props
         return (
 			
             <Grid container
@@ -50,20 +49,15 @@ export class FoodSelect extends Component {
                         </Grid>
 
 						{/* Friend Cards */}
-						<Grid item xs={12} sm={6} lg={2}>
-							<FriendCard image={yankee} name='Yankee With No Brim'/>
-						</Grid>
-						<Grid item xs={12} sm={6} lg={2}>
-							<FriendCard image={yankee} name='Barack Obama'/>
-						</Grid>
-						<Grid item xs={12} sm={6} lg={2}>
-							<FriendCard image={obamaSphere} name='Obama Sphere'/>
-						</Grid>
-						<Grid item xs={12} sm={6} lg={2}>
-							<FriendCard image={obamaPrism} name='Obama Prism'/>
-						</Grid>
+                        { values.friends.map(friend => 
+                            <Grid item xs={12} sm={6} lg={2}>
+							    <FriendCard name={friend}/>
+                            </Grid>
+                        )}
 
-
+                            
+                        
+						
                         {/* Next and Back Buttons */}
                         <Grid item container xs={12} 
                             justify='center'
