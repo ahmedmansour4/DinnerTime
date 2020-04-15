@@ -11,10 +11,27 @@ const checkAuth = require('../middleware/check-auth');
 let User = require('../models/user.model');
 let Event = require('../models/event.model');
 
+// Bring in all the middlware required to help send the confirmation email
+const sendEmail = require('./email.send');
+const msgs = require('../middleware/email.msgs');
+const templates = require('../middleware/email.template');
+
 // This endpoint will return all users in the DinnerTime database
 router.get('/', checkAuth, (req, res, next) => {
     User.find()
-        .then(users => res.json(users))
+        .then(users => res.status(200).json(users))
+        .catch(err => res.status(400).json('Error: ' + err));
+});
+
+// This endpoint will return a specific user within the data base using the
+// username
+router.get('/findUser', checkAuth, (req, res, next) => {
+    const username = req.body.username;
+
+    User.findOne({username: username})
+        .then(user => res.status(200).json({
+            userId: user._id
+        }))
         .catch(err => res.status(400).json('Error: ' + err));
 });
 
@@ -54,11 +71,54 @@ router.post('/createAccount', (req, res, next) => {
                             email: email,
                         });
 
+                        // Save the new user to the DinnerTime database. Then
+                        // send a confirmation email to the user, and success
+                        // messages to the client
                         newUser.save()
-                            .then(() => res.json('User added'))
+                            .then(() => {
+                                sendEmail(newUser.email, templates.confirm(newUser._id))
+                                    .then(() => res.status(200).json({
+                                        msg1: 'User Added!',
+                                        msg2: msgs.confirm
+                                    }));
+                            })
                             .catch(err => res.status(500).json('Error: ' + err));
                     }
                 });
+            }
+        })
+        .catch(err => res.status(400).json('Error: ' + err));
+});
+
+// This is the endpoint that will be hit by the link sent to the user within the
+// confirmation email
+router.get('/confirmEmail/:id', (req, res, next) => {
+    // Extract the 'userId' from the parameters list
+    const userId = req.params.id;
+
+    // Find the user in the DinnerTime database based on the 'userId'
+    User.findOne({_id: userId})
+        .then(user => {
+            // If the query does not return anything then the user is not
+            // present within the database
+            if (user.length < 1) {
+                res.status(400).json({msg: msgs.couldNotFind})
+            }
+            // If the user exists within the database and the email has not been
+            // confirmed, then confirm the user's email
+            else if (user && !user.emailConfirmed) {
+                user.emailConfirmed = true;
+
+                // Save the changes to the user within the database, while also
+                // sending back a confirmation message
+                user.save()
+                    .then(() => res.status(200).json({msg: msgs.confirmed}))
+                    .catch(err => res.status(400).json('Error: ' + err));
+            }
+            // Hitting this statement means the user already confirmed their
+            // email
+            else {
+                res.status(200).json({msg: msgs.alreadyConfirmed})
             }
         })
         .catch(err => res.status(400).json('Error: ' + err));
