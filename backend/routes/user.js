@@ -184,8 +184,8 @@ router.post('/login', (req, res, next) => {
 // This endpoint finds a specific user in the DinnerTime database using their
 // username and adds a Favorite restaurant to their 'favorites' list. It also
 // uses the 'checkAuth' middleware to check a client's authorization
-router.put('/addFavorite', checkAuth, (req, res, next) => {
-    const username = req.body.username;
+router.put('/addFavorite/:id', checkAuth, (req, res, next) => {
+    const userId = req.params.id;
     // Extract information about said favorite restaurant
     const restaurantName = req.body.restaurantName;
     const restaurantAddress = req.body.restaurantAddress;
@@ -194,7 +194,7 @@ router.put('/addFavorite', checkAuth, (req, res, next) => {
     const websiteUrl = req.body.websiteUrl;
 
     // First find the current user in the DinnerTime database
-    User.findOne({username: username})
+    User.findOne({_id: userId})
         // Once the current user is found, insert the restaurant's information
         // into the 'favorites' array
         .then(response => {
@@ -364,10 +364,10 @@ router.delete('/deleteupcomingEvent/:id', checkAuth, (req, res, next) => {
 
 // This endpoint will simply delete a user from the DinnerTime database. This
 // endpoint also checks authorization using 'checkAuth'
-router.delete('/deleteUser', checkAuth, (req, res, next) => {
-    // Simply find the current user's account via their username and delete
+router.delete('/deleteUser/:id', checkAuth, (req, res, next) => {
+    // Simply find the current user's account via their '_id' and delete
     // their account
-    User.findOneAndRemove(req.body.username)
+    User.findOneAndRemove({_id: req.params.id})
         .then(() => res.json('User removed from database'))
         .catch(err => res.json('Error: ' + err));
 });
