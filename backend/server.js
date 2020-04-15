@@ -29,12 +29,10 @@ connection.once('open', () => {
 // Import the files into these variables
 const userRouter = require('./routes/user');
 const eventRouter = require('./routes/event');
-const emailRouter = require('./routes/email');
 
 // Use these files
 app.use('/events', eventRouter);
 app.use('/users', userRouter);
-app.use('/email', emailRouter);
 
 // This will start the server on a certain port
 app.listen(port, () => {
