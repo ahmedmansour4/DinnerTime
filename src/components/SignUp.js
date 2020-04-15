@@ -15,18 +15,13 @@ const useStyles = makeStyles(() => ({
     }
 }));
 
-export class Login extends Component {
+export class SignUp extends Component {
 
     // Add functions here
 
     continue = e => {
         e.preventDefault()
         this.props.nextStep()
-    }
-
-    goBack = e => {
-        e.preventDefault()
-        this.props.prevStep()
     }
 
     render() {
@@ -42,7 +37,7 @@ export class Login extends Component {
                 <Grid item container spacing={3} justify='center' alignItems='center' direction='column'>
                          <Grid item xs={12} sm={7}>
                          <Typography variant='h3' align='center' className={useStyles.typographyStyles}>
-                            Welcome to Dinner Time!
+                            Sign Up!
                         </Typography>
                         </Grid>
 
@@ -60,12 +55,33 @@ export class Login extends Component {
                             <TextField
                                 required
                                 id="outlined-required"
+                                label="Email"
+                                variant="outlined"
+                                fullWidth={true}
+                            />
+                        </Grid>
+
+                        <Grid item xs={6}>
+                            <TextField
+                                required
+                                id="outlined-required"
+                                label="Name"
+                                variant="outlined"
+                                fullWidth={true}
+                            />
+                        </Grid>
+
+                        <Grid item xs={6}>
+                            <TextField
+                                required
+                                id="outlined-required"
                                 label="Password"
                                 type='password'
                                 variant="outlined"
                                 fullWidth={true}
                             />
                         </Grid>
+
 
                         <Grid item xs={12} sm={6}>
                         <Button 
@@ -74,18 +90,7 @@ export class Login extends Component {
                             fullWidth={true}
                             onClick={this.continue}
                         >
-                            Login
-                        </Button>
-                        </Grid>
-
-                        <Grid item xs={12} sm={6}>
-                        <Button 
-                            variant='contained'
-                            color="secondary"
-                            fullWidth={true}
-                            onClick={this.goBack}
-                        >
-                            Sign Up
+                            Confirm
                         </Button>
                         </Grid>
                 </Grid>
@@ -94,4 +99,4 @@ export class Login extends Component {
     }
 }
 
-export default Login
+export default SignUp

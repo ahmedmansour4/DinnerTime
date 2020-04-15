@@ -10,9 +10,6 @@ const useStyles = makeStyles(() => ({
 }));
 
 const Header = () => {
-
-    
-
     return (
         <AppBar position='static'>
             <Toolbar>

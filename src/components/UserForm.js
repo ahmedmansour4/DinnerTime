@@ -4,6 +4,7 @@ import Login from './Login'
 import FindFood from './FindFood'
 import FoodSelect from './FoodSelect'
 import FriendSelect from './FriendSelect'
+import SignUp from './SignUp'
 
 
 export class UserForm extends Component {
@@ -11,11 +12,9 @@ export class UserForm extends Component {
     state = {
         step: 0,
         foodTypes: '',
-        lastName: '',
-        email: '',
-        occupation: '',
-        city: '',
-        bio: ''
+        favoriteRestaurants: [],
+        friends: [],
+
     }
 
     // Go to next step
@@ -36,6 +35,7 @@ export class UserForm extends Component {
         })
     }
 
+
     // Handle feilds change
     handleChange = input => e => {
         this.setState({[input]: e.target.value})
@@ -47,10 +47,18 @@ export class UserForm extends Component {
         const values = { firstName, lastName, email, occupation, city, bio}
 
         switch(step) {
+            case -1:
+                return (
+                    <SignUp
+                        nextStep={this.nextStep}
+                        handleChange={this.handleChange}
+                    />
+                )
             case 0:
                 return (
                     <Login
                         nextStep={this.nextStep}
+                        prevStep={this.prevStep}
                         handleChange={this.handleChange}
                         values={values}
                     />
