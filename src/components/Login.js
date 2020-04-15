@@ -61,7 +61,7 @@ export class Login extends Component {
           .then(res => {
               // Get the response here, do something with it here
               // On successful login, we recieve a Javascript Web Token (JWT). We need to save this somewhere locally so we can use it to get authorization to load other pages.
-
+              this.props.nextStep();
                 console.log(res.data);
           }).catch((error) => {
               // There was an error sent back, so read the String sent back and act accordingly.
@@ -78,6 +78,7 @@ export class Login extends Component {
                   console.log("SOME UNKNOWN ERROR :(");
               }
           });
+          
       }
     
       // This render function controls what is displayed, it's all in HTML
@@ -106,7 +107,6 @@ export class Login extends Component {
                         <Grid item xs={6}>
                             <TextField required id="outlined-required" label="Password" type='password' variant="outlined" fullWidth={true} onChange={this.handleChangePassword}/>
                         </Grid>
-                        <p>Test!!</p>
                         <Grid item xs={12} sm={7}>
                         <Button variant='contained' color="secondary" fullWidth={true} onClick={this.handleSubmit}
                         >
