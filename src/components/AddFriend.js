@@ -24,6 +24,14 @@ export class AddFriend extends Component {
         this.props.nextStep()
     }
 
+    goToFindFood = e => {
+        e.preventDefault()
+        this.props.goToFindFood()
+    }
+
+    addFriend = e => {
+        console.log('adding friend')
+    }
 
     render() {
         return (
@@ -68,7 +76,7 @@ export class AddFriend extends Component {
                             variant='contained'
                             color="secondary"
                             fullWidth={true}
-                            onClick={this.goToFind}
+                            onClick={this.goToFindFood}
                         >
                             Cancel
                         </Button>

@@ -6,10 +6,6 @@ import { Button, Typography } from '@material-ui/core'
 import FriendCard from './FriendCard'
 import { makeStyles } from '@material-ui/styles'
 
-import yankee from './img/yankee.jpg'
-import obamaPrism from './img/obama-prism.jpg'
-import obamaSphere from './img/obama-sphere.png'
-
 const useStyles = makeStyles(() => ({
     typographyStyles: {
         flex: 1

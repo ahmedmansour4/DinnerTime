@@ -9,21 +9,26 @@ import Typography from '@material-ui/core/Typography';
 import Avatar from '@material-ui/core/Avatar'
 import { CardHeader } from '@material-ui/core';
 
-
-export class FriendCard extends Component {
+const useStyles = makeStyles(() => ({
+    card: {
+        minWidth: 500,
+    }
+}));
+  
+export class RestaurantCard extends Component {
     render() {
-        const { image, name } = this.props
-
+        const { name } = this.props
         return (
-            <Card>
+            <Card className={useStyles.card}>
                 <CardHeader
-                    avatar={<Avatar>{name.charAt(0).toUpperCase()}</Avatar>}
                     title={<Typography align='center' variant='h5'>{name}</Typography>}
-                    action={<Checkbox />}
                 />
+                <CardContent>
+                    
+                </CardContent>
             </Card>
         )
     }
 }
 
-export default FriendCard
+export default RestaurantCard

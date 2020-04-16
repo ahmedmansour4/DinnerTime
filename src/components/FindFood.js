@@ -26,6 +26,11 @@ export class FindFood extends Component {
         e.preventDefault()
         this.props.goToAddFriends()
     }
+
+    goToFindFood = e => {
+        e.preventDefault()
+        this.props.goToFindFood()
+    }
     
     render() {
         const {values, handleChange} = this.props

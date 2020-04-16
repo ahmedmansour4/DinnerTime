@@ -74,6 +74,7 @@ export class FoodSelect extends Component {
                             color="secondary"
                             onChange={handleChange('foodTypes')}
                             fullWidth={true}
+        
                         >
         
                             Mexican

@@ -6,16 +6,25 @@ import FoodSelect from './FoodSelect'
 import FriendSelect from './FriendSelect'
 import SignUp from './SignUp'
 import AddFriend from './AddFriend'
+import Confirm from './Confirm'
 
 
 export class UserForm extends Component {
 
     state = {
-        step: 3,
+        step: 0,
         username: '',
         foodTypes: '',
-        favoriteRestaurants: [],
-        friends:[]
+        favorites: ['McDonalds'],
+        friends: ['bob'],
+        eventInfo: {
+            attendees: [],
+            restaurant: '',
+            description: '',
+            timeOfEvent: '',
+            duration: ''
+        },
+        token: ''
     }
 
     // Go to next step
@@ -36,23 +45,30 @@ export class UserForm extends Component {
         })
     }
 
-    goToAddFriends = e => {
+    goToAddFriends = () => {
         const { step } = this.state
         this.setState({
             step: 100
         })
     }
 
+    goToFindFood = () => {
+        const { step } = this.state
+        this.setState({
+            step: 1
+        })
+    }
 
     // Handle feilds change
     handleChange = input => e => {
         this.setState({[input]: e.target.value})
     }
 
+
     render() {
         const { step } = this.state
-        const { username, foodTypes, favoriteRestaurants, friends } = this.state
-        const values = { username, foodTypes, favoriteRestaurants, friends }
+        const { username, foodTypes, favorites, friends } = this.state
+        const values = { username, foodTypes, favorites, friends }
 
         switch(step) {
             case -1:
@@ -100,13 +116,18 @@ export class UserForm extends Component {
                     />
                 )
             case 4:
-                return <h1>Confirm</h1>
+                return (
+                    <Confirm
+                        handleChange={this.handleChange}
+                        values={ values }
+                    />
+                )
             case 5:
                 return <h1>Success!</h1>
             case 100:
                 return (
                     <AddFriend
-
+                        goToFindFood={this.goToFindFood}
                     />
                 )
         }
