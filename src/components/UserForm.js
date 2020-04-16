@@ -5,16 +5,17 @@ import FindFood from './FindFood'
 import FoodSelect from './FoodSelect'
 import FriendSelect from './FriendSelect'
 import SignUp from './SignUp'
+import AddFriend from './AddFriend'
 
 
 export class UserForm extends Component {
 
     state = {
-        step: 0,
+        step: 3,
+        username: '',
         foodTypes: '',
         favoriteRestaurants: [],
-        friends: [],
-
+        friends:[]
     }
 
     // Go to next step
@@ -35,6 +36,13 @@ export class UserForm extends Component {
         })
     }
 
+    goToAddFriends = e => {
+        const { step } = this.state
+        this.setState({
+            step: 100
+        })
+    }
+
 
     // Handle feilds change
     handleChange = input => e => {
@@ -43,8 +51,8 @@ export class UserForm extends Component {
 
     render() {
         const { step } = this.state
-        const { firstName, lastName, email, occupation, city, bio} = this.state
-        const values = { firstName, lastName, email, occupation, city, bio}
+        const { username, foodTypes, favoriteRestaurants, friends } = this.state
+        const values = { username, foodTypes, favoriteRestaurants, friends }
 
         switch(step) {
             case -1:
@@ -52,6 +60,7 @@ export class UserForm extends Component {
                     <SignUp
                         nextStep={this.nextStep}
                         handleChange={this.handleChange}
+                        value={ values }
                     />
                 )
             case 0:
@@ -60,16 +69,16 @@ export class UserForm extends Component {
                         nextStep={this.nextStep}
                         prevStep={this.prevStep}
                         handleChange={this.handleChange}
-                        values={values}
+                        value={ values }
                     />
                 )
             case 1:
                 return (
                     <FindFood
                         nextStep={this.nextStep}
-                        prevStep={this.prevStep}
+                        goToAddFriends={this.goToAddFriends}
                         handleChange={this.handleChange}
-                        values={values}
+                        value={ values }
                     />
                 )
             case 2:
@@ -78,7 +87,7 @@ export class UserForm extends Component {
                         nextStep={this.nextStep}
                         prevStep={this.prevStep}
                         handleChange={this.handleChange}
-                        values={values}
+                        value={ values }
                     />
                 )
             case 3:
@@ -87,14 +96,19 @@ export class UserForm extends Component {
                         nextStep={this.nextStep}
                         prevStep={this.prevStep}
                         handleChange={this.handleChange}
-                        values={values}
+                        values={ values }
                     />
                 )
             case 4:
                 return <h1>Confirm</h1>
             case 5:
                 return <h1>Success!</h1>
+            case 100:
+                return (
+                    <AddFriend
 
+                    />
+                )
         }
     }
 }

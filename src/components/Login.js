@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-
+import axios from 'axios'
 
 import axios from 'axios';
 
@@ -18,6 +18,7 @@ const useStyles = makeStyles(() => ({
 }));
 
 export class Login extends Component {
+
     continue = e => {
         e.preventDefault()
         this.props.nextStep()
@@ -99,6 +100,7 @@ export class Login extends Component {
                         </Typography>
                         </Grid>
                         <Grid item xs={6}>
+
                             <TextField required id="outlined-required" label="Username" variant="outlined" fullWidth={true} onChange={this.handleChangeUsername}/>
                             
                         </Grid>

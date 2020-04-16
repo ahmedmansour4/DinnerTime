@@ -16,9 +16,15 @@ const useStyles = makeStyles((theme) => ({
   
 
 export class FindFood extends Component {
+
     continue = e => {
         e.preventDefault()
         this.props.nextStep()
+    }
+
+    goToAddFriends = e => {
+        e.preventDefault()
+        this.props.goToAddFriends()
     }
     
     render() {
@@ -60,6 +66,16 @@ export class FindFood extends Component {
                             onClick={this.continue}
                         >
                             Random
+                        </Button>
+                        </Grid>
+                        <Grid item xs={12} sm={7}>
+                        <Button 
+                            variant='contained'
+                            color="secondary"
+                            fullWidth={true}
+                            onClick={this.goToAddFriends}
+                        >
+                            Add Friend
                         </Button>
                         </Grid>
                 </Grid>
