@@ -6,25 +6,18 @@ import FoodSelect from './FoodSelect'
 import FriendSelect from './FriendSelect'
 import SignUp from './SignUp'
 import AddFriend from './AddFriend'
-import Confirm from './Confirm'
+import FriendList from './FriendList'
+import FavoritesList from './FavoritesList'
 
 
 export class UserForm extends Component {
 
     state = {
-        step: 0,
+        step: 1,
         username: '',
         foodTypes: '',
-        favorites: ['McDonalds'],
-        friends: ['bob'],
-        eventInfo: {
-            attendees: [],
-            restaurant: '',
-            description: '',
-            timeOfEvent: '',
-            duration: ''
-        },
-        token: ''
+        favoriteRestaurants: [],
+        friends:[]
     }
 
     // Go to next step
@@ -45,30 +38,52 @@ export class UserForm extends Component {
         })
     }
 
-    goToAddFriends = () => {
+    goToAddFriends = e => {
         const { step } = this.state
         this.setState({
             step: 100
         })
     }
 
-    goToFindFood = () => {
+		goToLogOut = e => {
+        const { step } = this.state
+        this.setState({
+            step: 0
+        })
+    }
+
+		goHome = e => {
         const { step } = this.state
         this.setState({
             step: 1
         })
     }
 
+		getFriendList = e => {
+        const { step } = this.state
+        this.setState({
+            step: 110
+        })
+    }
+
+		getFavorites = e => {
+        const { step } = this.state
+        this.setState({
+            step: 120
+        })
+    }
+
+
+
     // Handle feilds change
     handleChange = input => e => {
         this.setState({[input]: e.target.value})
     }
 
-
     render() {
         const { step } = this.state
-        const { username, foodTypes, favorites, friends } = this.state
-        const values = { username, foodTypes, favorites, friends }
+        const { username, foodTypes, favoriteRestaurants, friends } = this.state
+        const values = { username, foodTypes, favoriteRestaurants, friends }
 
         switch(step) {
             case -1:
@@ -93,6 +108,10 @@ export class UserForm extends Component {
                     <FindFood
                         nextStep={this.nextStep}
                         goToAddFriends={this.goToAddFriends}
+												goToLogOut={this.goToLogOut}
+												goHome={this.goHome}
+												getFriendList={this.getFriendList}
+												getFavorites={this.getFavorites}
                         handleChange={this.handleChange}
                         value={ values }
                     />
@@ -102,6 +121,10 @@ export class UserForm extends Component {
                     <FoodSelect
                         nextStep={this.nextStep}
                         prevStep={this.prevStep}
+												goToLogOut={this.goToLogOut}
+												goHome={this.goHome}
+												getFriendList={this.getFriendList}
+												getFavorites={this.getFavorites}
                         handleChange={this.handleChange}
                         value={ values }
                     />
@@ -111,27 +134,55 @@ export class UserForm extends Component {
                     <FriendSelect
                         nextStep={this.nextStep}
                         prevStep={this.prevStep}
+												goToLogOut={this.goToLogOut}
+												goHome={this.goHome}
+												getFriendList={this.getFriendList}
+												getFavorites={this.getFavorites}
                         handleChange={this.handleChange}
                         values={ values }
                     />
                 )
             case 4:
-                return (
-                    <Confirm
-                        handleChange={this.handleChange}
-                        values={ values }
-                    />
-                )
+                return <h1>Confirm</h1>
             case 5:
                 return <h1>Success!</h1>
             case 100:
                 return (
                     <AddFriend
-                        goToFindFood={this.goToFindFood}
+										goToLogOut={this.goToLogOut}
+										goHome={this.goHome}
+										getFriendList={this.getFriendList}
+										getFavorites={this.getFavorites}
                     />
                 )
+						case 110:
+                return (
+									<FriendList
+											nextStep={this.nextStep}
+											prevStep={this.prevStep}
+											goToLogOut={this.goToLogOut}
+											goHome={this.goHome}
+											getFriendList={this.getFriendList}
+											getFavorites={this.getFavorites}
+											handleChange={this.handleChange}
+											values={ values }
+									/>
+                )
+						case 120:
+								return (
+									<FavoritesList
+											nextStep={this.nextStep}
+											prevStep={this.prevStep}
+											goToLogOut={this.goToLogOut}
+											goHome={this.goHome}
+											getFriendList={this.getFriendList}
+											getFavorites={this.getFavorites}
+											handleChange={this.handleChange}
+											values={ values }
+									/>
+								)
         }
-    }
+		}
 }
 
 export default UserForm

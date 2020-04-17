@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
-import axios from 'axios';
+
 import Grid from '@material-ui/core/Grid'
 
 import { Button, Typography} from '@material-ui/core'
 import { makeStyles } from '@material-ui/styles'
-
+import Header from '../Header'
 
 const useStyles = makeStyles(() => ({
     typographyStyles: {
@@ -13,8 +13,6 @@ const useStyles = makeStyles(() => ({
 }));
 
 export class FoodSelect extends Component {
-
-    
 
     continue = e => {
         e.preventDefault()
@@ -25,57 +23,48 @@ export class FoodSelect extends Component {
         e.preventDefault()
         this.props.prevStep()
     }
-    
 
-    handleChangeFoodChinese = event => {
-        this.setState({ Food: "Chinese" });
-        console.log("Chinese was selected");
+		goToLeave = e => {
+			this.props.goToLogOut()
+		}
 
-      }
+		goHome = e => {
+			this.props.goHome()
+		}
 
-      handleChangeFoodAmerican = event => {
-        this.setState({ Food: "American" });
-        console.log("American was selected");
+		getFriendList = e => {
+			this.props.getFriendList()
+		}
 
-      }
+		getFavorites = e => {
+			this.props.getFavorites()
+		}
 
-      handleChangeFoodMexican = event => {
-        this.setState({ Food: "Mexican" });
-        console.log("Mexican was selected");
 
-      }
-      
-      handleSubmit = event => {
-        event.preventDefault();
-        console.log("food is " + this.state.Food);
 
-        
-        this.props.nextStep()
-        // Creating a object to hold all our login info and send it to API
-        //const loginInfo = {
-          //username: this.state.username,
-          //password: this.state.password
-        //};
-        
-        // Performing the post request, first paramter is the URL for where the API is located, second is the data we are sending, probably as a JSON packet.
-        //console.log("username is: " + loginInfo.username + " and password is " + loginInfo.password);
-        // Placeholder URL below
-
-          
-      }
     render() {
         const { handleChange } = this.props
 
         return (
-            
+					<Grid container
+							direction='column'
+					>
+					<Header
+					goToLogOut={this.goToLeave}
+					goHome={this.goHome}
+					getFriendList={this.getFriendList}
+					getFavorites={this.getFavorites}
+					/>
             <Grid container
                 direction='column'
                 justify='center'
                 alignItems='center'
                 spacing={3}
+								maxWidth="sm"
+								style={{height: '80vh' }}
             >
                 <Grid item />
-                
+
                 <Grid item container spacing={3} justify='center'>
                          <Grid item xs={12} sm={7}>
                          <Typography variant='h5' align='center' className={useStyles.typographyStyles}>
@@ -89,19 +78,18 @@ export class FoodSelect extends Component {
                         <Button
                             variant='contained'
                             color="secondary"
-                            onClick={this.handleChangeFoodChinese}
+                            onChange={handleChange('foodTypes')}
                             fullWidth={true}
-                            
                         >
                             Chinese
                         </Button>
                         </Grid>
 
                         <Grid item xs={12} sm={7}>
-                        <Button 
+                        <Button
                             variant='contained'
                             color="secondary"
-                            onClick={this.handleChangeFoodAmerican}
+                            onChange={handleChange('foodTypes')}
                             fullWidth={true}
                         >
                             American
@@ -109,26 +97,25 @@ export class FoodSelect extends Component {
                         </Grid>
 
                         <Grid item xs={12} sm={7}>
-                        <Button 
+                        <Button
                             variant='contained'
                             color="secondary"
-                            onClick={this.handleChangeFoodMexican}
+                            onChange={handleChange('foodTypes')}
                             fullWidth={true}
-        
                         >
-        
+
                             Mexican
                         </Button>
                         </Grid>
 
                         {/* Next and Back Buttons */}
-                        <Grid item container xs={12} 
+                        <Grid item container xs={12}
                             justify='center'
                             alignItems='stretch'
                             spacing={3}
-                        >        
+                        >
                                 <Grid item xs={6} sm={4}>
-                                <Button 
+                                <Button
                                     variant='contained'
                                     color="secondary"
                                     fullWidth={true}
@@ -139,11 +126,11 @@ export class FoodSelect extends Component {
                                 </Grid>
 
                                 <Grid item xs={6} sm={4}>
-                                <Button 
+                                <Button
                                     variant='contained'
                                     color="secondary"
                                     fullWidth={true}
-                                    onClick={this.handleSubmit}
+                                    onClick={this.continue}
                                 >
                                     Next
                                 </Button>
@@ -151,10 +138,10 @@ export class FoodSelect extends Component {
                         </Grid>
                 </Grid>
             </Grid>
+						</Grid>
         )
     }
 }
 
 
 export default FoodSelect
-

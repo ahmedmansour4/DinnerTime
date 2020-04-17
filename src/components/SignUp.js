@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 
-import axios from 'axios'
+
 import Grid from '@material-ui/core/Grid'
 
 import { Button, Typography } from '@material-ui/core'
@@ -24,77 +24,7 @@ export class SignUp extends Component {
         this.props.nextStep()
     }
 
-    // This event thingy is triggered when a change is made to the username field, and sets the value of the field to the variable username
-    handleChangeUsername = event => {
-        this.setState({ username: event.target.value });
-        console.log("woot test2");
-      }
-
-      // This event thingy is triggered when a change is made to the password field, and sets the value of the field to the variable password
-      handleChangePassword = event => {
-        this.setState({ password: event.target.value });
-        console.log("woot test2");
-      }
-     
-      // This event thingy is triggered when a change is made to the password field, and sets the value of the field to the variable password
-      handleChangeEmail = event => {
-        this.setState({ email: event.target.value });
-        console.log("woot test2");
-      }
-
-      // This event thingy is triggered when a change is made to the password field, and sets the value of the field to the variable password
-      handleChangePassword = event => {
-        this.setState({ password: event.target.value });
-        console.log("woot test2");
-      }
-      
-      // This event thingy is triggered when you click the submit button.
-      handleSubmit = event => {
-        event.preventDefault();
-        console.log("woot test2");
-
-        // Creating a object to hold all our login info and send it to API
-        const loginInfo = {
-          username: this.state.username,
-          password: this.state.password,
-          email : this.state.email
-        };
-        
-        // Performing the post request, first paramter is the URL for where the API is located, second is the data we are sending, probably as a JSON packet.
-        console.log("username is: " + loginInfo.username + " and password is " + loginInfo.password);
-        // Placeholder URL below
-
-        const ops = {
-            method: 'POST',
-            headers: { 'content-type': 'application/json' },
-            data: JSON.stringify(loginInfo) ,
-            url: "http://localhost:5000/users/SignUp"
-        }
-        axios(ops)
-          .then(res => {
-              // Get the response here, do something with it here
-              // On successful login, we recieve a Javascript Web Token (JWT). We need to save this somewhere locally so we can use it to get authorization to load other pages.
-              this.props.nextStep();
-                console.log(res.data);
-          }).catch((error) => {
-              // There was an error sent back, so read the String sent back and act accordingly.
-              if(error.response.data.message === "Authorization Unsuccessful") {
-                  // If we got here, the user's login details were not in the database.
-                  console.log("INCORRECT LOGIN DETAILS");
-              }
-              else if(error.response.data.message === "Authorization Unsuccessful, confirm email") {
-                  // If we got here, the user's email was unverifed.
-                  console.log("EMAIL UNVERIFIED")
-              }
-              else {
-                  // If we got here, some unknown error occured.
-                  console.log("SOME UNKNOWN ERROR :(");
-              }
-          });
-          
-      }
-
-      render() {
+    render() {
         return (
             <Grid container
                 direction='column'
