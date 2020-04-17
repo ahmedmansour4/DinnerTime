@@ -18,7 +18,7 @@ const useStyles = makeStyles(() => ({
 }));
 
 export class Login extends Component {
-    continue = e => {
+    nextStep = e => {
         e.preventDefault()
         this.props.nextStep()
     }
@@ -60,6 +60,8 @@ export class Login extends Component {
           .then(res => {
               // Get the response here, do something with it here
               // On successful login, we recieve a Javascript Web Token (JWT). We need to save this somewhere locally so we can use it to get authorization to load other pages.
+
+              this.props.updateUsername(loginInfo.username);
               this.props.nextStep();
                 console.log(res.data);
           }).catch((error) => {
