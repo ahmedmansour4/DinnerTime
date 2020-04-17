@@ -12,9 +12,10 @@ import Confirm from './Confirm'
 export class UserForm extends Component {
 
     state = {
-        step: 0,
+        step: 4,
         username: '',
         foodTypes: '',
+        radius: 0,
         favorites: ['McDonalds'],
         friends: ['bob'],
         eventInfo: {
