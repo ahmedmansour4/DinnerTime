@@ -22,6 +22,8 @@ export class Login extends Component {
         e.preventDefault()
         this.props.nextStep()
     }
+
+    
     
     // This event thingy is triggered when a change is made to the username field, and sets the value of the field to the variable username
     handleChangeUsername = event => {

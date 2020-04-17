@@ -36,13 +36,13 @@ export class SignUp extends Component {
         console.log("woot test2");
       }
 
-      // This event thingy is triggered when a change is made to the password field, and sets the value of the field to the variable password
+      // This event thingy is triggered when a change is made to the name field, and sets the value of the field to the variable name
       handleChangeName = event => {
         this.setState({ name: event.target.value });
         console.log("woot test2");
       }
      
-      // This event thingy is triggered when a change is made to the password field, and sets the value of the field to the variable password
+      // This event thingy is triggered when a change is made to the email field, and sets the value of the field to the variable email
       handleChangeEmail = event => {
         this.setState({ email: event.target.value });
         console.log("woot test2");

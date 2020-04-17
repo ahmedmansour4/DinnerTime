@@ -17,6 +17,24 @@ const useStyles = makeStyles((theme) => ({
 
 export class FindFood extends Component {
 
+    componentDidMount() {
+        let currentComponent = this;
+        if ("geolocation" in navigator) {
+          console.log("Available");
+          navigator.geolocation.getCurrentPosition(function(position) {
+            console.log("Latitude is :", position.coords.latitude);
+            console.log("Longitude is :", position.coords.longitude);
+            currentComponent.props.updateLatitude(position.coords.latitude);
+            currentComponent.props.updateLongitude(position.coords.longitude);
+          });
+        } else {
+          console.log("Not Available");
+        }
+      }
+
+    //handleLocation = event => {
+        //this.props.updateLocation(position.coords.latitude, position.coords.longitude);
+   // }
     continue = e => {
         e.preventDefault()
         this.props.nextStep()
@@ -26,16 +44,14 @@ export class FindFood extends Component {
         e.preventDefault()
         this.props.goToAddFriends()
     }
-
-    goToFindFood = e => {
-        e.preventDefault()
-        this.props.goToFindFood()
-    }
     
+    
+
     render() {
         const {values, handleChange} = this.props
 
         return (
+            
             <Grid container
                 direction='column'
                 justify='center'
@@ -73,16 +89,7 @@ export class FindFood extends Component {
                             Random
                         </Button>
                         </Grid>
-                        <Grid item xs={12} sm={7}>
-                        <Button 
-                            variant='contained'
-                            color="secondary"
-                            fullWidth={true}
-                            onClick={this.goToAddFriends}
-                        >
-                            Add Friend
-                        </Button>
-                        </Grid>
+                       
                 </Grid>
             </Grid>
         )
