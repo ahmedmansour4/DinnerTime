@@ -18,8 +18,6 @@ export class Result extends Component {
   
 
   handleSubmit = event => {
-    let key = "longitude"
-    console.log("hmmm! state location value is " + this.props.longitude);
     const ops = {
       method: 'GET',
       headers: { 'content-type': 'application/json' },
