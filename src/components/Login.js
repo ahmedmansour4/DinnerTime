@@ -31,19 +31,17 @@ export class Login extends Component {
     // This event thingy is triggered when a change is made to the username field, and sets the value of the field to the variable username
     handleChangeUsername = event => {
         this.setState({ username: event.target.value });
-        console.log("woot test2");
       }
 
       // This event thingy is triggered when a change is made to the password field, and sets the value of the field to the variable password
       handleChangePassword = event => {
         this.setState({ password: event.target.value });
-        console.log("woot test2");
       }
      
       // This event thingy is triggered when you click the submit button.
       handleSubmit = event => {
         event.preventDefault();
-        console.log("woot test2");
+
 
         // Creating a object to hold all our login info and send it to API
         const loginInfo = {

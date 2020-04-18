@@ -4,18 +4,18 @@ import { makeStyles } from '@material-ui/styles'
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
-import Checkbox from '@material-ui/core/Checkbox';
 import Typography from '@material-ui/core/Typography';
-import Avatar from '@material-ui/core/Avatar'
 import { CardHeader } from '@material-ui/core';
-import Grid from '@material-ui/core/Grid';
+import IconButton from '@material-ui/core/IconButton'
+import FavoriteIcon from '@material-ui/icons/Favorite'
 
 const useStyles = makeStyles(() => ({
     card: {
         minWidth: 500,
     }
 }));
-  
+
+
 export class RestaurantCard extends Component {
     render() {
         return (
@@ -31,6 +31,11 @@ export class RestaurantCard extends Component {
                     {this.props.restaurant.phone}
                 </Typography>
                 </CardContent>
+                <CardActions>
+                    <IconButton onClick={console.log('Adding'+this.props.restaurant.name+'to favorites.')}>
+                        <FavoriteIcon fontSize="large" />
+                    </IconButton>
+                </CardActions>
             </Card>
         )
     }

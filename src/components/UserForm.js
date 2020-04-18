@@ -112,6 +112,8 @@ export class UserForm extends Component {
     }
 
 
+
+
     render() {
         const { step } = this.state
         const { username, foodTypes, favorites, friends } = this.state
@@ -170,8 +172,7 @@ export class UserForm extends Component {
                     />
                 )
             case 4:
-                return (
-                    
+                return ( 
                     <Result
                         restaraunt={this.state.selectedRestaurant}
                         longitude = {this.state.longitude}
@@ -179,8 +180,9 @@ export class UserForm extends Component {
                         foodTypes = {this.state.foodTypes}
                         radius={this.state.radius}
                         setSelectedRestaurant={this.setSelectedRestaurant}
+                        goToFindFood={this.goToFindFood}
+                        addToFavorites={this.addToFavorites}
                     />
-                    
                 )
             case 100:
                 return (

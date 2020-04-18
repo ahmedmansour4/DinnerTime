@@ -36,7 +36,6 @@ export class Result extends Component {
 
     componentDidMount() {
         this.pickRestaurant();
-        this.getSelectedRestaurant(this.state.selectedRestaurant);
     }
 
 
@@ -95,10 +94,10 @@ export class Result extends Component {
         }))
     }
 
-    getSelectedRestaurant = selectedRestaurant => {
-        console.log('in result:')
-        console.log(selectedRestaurant);
+    goToFindFood = () => {
+        this.props.goToFindFood();
     }
+
 
 
   render() {
@@ -119,7 +118,20 @@ export class Result extends Component {
             </Grid>
             <Grid item container spacing={3} justify='center'>
                 <Grid item>
-                    <RestaurantCard restaurant={this.state.selectedRestaurant} />
+                    <RestaurantCard 
+                        restaurant={this.state.selectedRestaurant}
+                        addToFavorites={this.addToFavorites}
+                    />
+                </Grid>
+                <Grid item>
+                    <Button 
+                        variant='contained'
+                        color="secondary"
+                        fullWidth={true}
+                        onClick={this.goToFindFood}
+                    >
+                        Done
+                    </Button>
                 </Grid>
             </Grid>
         </Grid>
