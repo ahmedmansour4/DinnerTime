@@ -1,13 +1,13 @@
 import React, { Component } from 'react'
-
+import axios from 'axios'
 
 import Grid from '@material-ui/core/Grid'
 
 import { Button, Typography } from '@material-ui/core'
 import { makeStyles } from '@material-ui/styles'
-import RestaurantCard from './RestaurantCard';
-import DateFnsUtils from '@date-io/date-fns';
 import Slider from '@material-ui/core/Slider'
+import {Map, InfoWindow, Marker, GoogleApiWrapper} from 'google-maps-react';
+
 
 
 const useStyles = makeStyles(() => ({
@@ -18,16 +18,27 @@ const useStyles = makeStyles(() => ({
 
 export class Confirm extends Component {
 
-    getSearchRadius = radius => {
-        this.setState({radius: radius.target.value })
+    
+
+
+    
+
+    setRadius = radius => {
+        this.props.setRadius(radius)
     }
 
-    findRestaurant = () => {
-        console.log("Select Restaurant here and display on the next page")
+    
+
+    nextStep = e => {
+
+        this.props.nextStep()
     }
 
     render() {
-        const { values } = this.props
+        const handleRadiusChange = (e, value) => {
+            this.setRadius(value)
+        }
+
         return (
             <Grid container
                 direction='column'
@@ -51,14 +62,13 @@ export class Confirm extends Component {
                         </Typography>
                         <Slider
                             defaultValue={5}
-                            //getAriaValueText={this.getSearchRadius}
-                            onChange={this.getSearchRadius}
+                            onChange={handleRadiusChange}
                             aria-labelledby="discrete-slider"
                             valueLabelDisplay="auto"
                             step={1}
                             marks
                             min={1}
-                            max={50}
+                            max={30}
                         />
                         </Grid>
 
@@ -67,7 +77,7 @@ export class Confirm extends Component {
                             variant='contained'
                             color="secondary"
                             fullWidth={true}
-                            onClick={this.findRestaurant}
+                            onClick={this.nextStep}
                         >
                             Confirm
                         </Button>

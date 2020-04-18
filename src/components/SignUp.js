@@ -17,7 +17,16 @@ const useStyles = makeStyles(() => ({
 
 export class SignUp extends Component {
 
-    // Add functions here
+    constructor(props){
+        super(props);
+    
+        this.state = {
+            username: '',
+            name: '',
+            password: '',
+            email: ''
+        }
+    }
 
     continue = e => {
         e.preventDefault()
@@ -27,69 +36,67 @@ export class SignUp extends Component {
     // This event thingy is triggered when a change is made to the username field, and sets the value of the field to the variable username
     handleChangeUsername = event => {
         this.setState({ username: event.target.value });
-        console.log("woot test2");
       }
 
       // This event thingy is triggered when a change is made to the password field, and sets the value of the field to the variable password
       handleChangePassword = event => {
         this.setState({ password: event.target.value });
-        console.log("woot test2");
+      }
+
+      // This event thingy is triggered when a change is made to the password field, and sets the value of the field to the variable password
+      handleChangeName = event => {
+        this.setState({ name: event.target.value });
       }
      
       // This event thingy is triggered when a change is made to the password field, and sets the value of the field to the variable password
       handleChangeEmail = event => {
         this.setState({ email: event.target.value });
-        console.log("woot test2");
-      }
-
-      // This event thingy is triggered when a change is made to the password field, and sets the value of the field to the variable password
-      handleChangePassword = event => {
-        this.setState({ password: event.target.value });
-        console.log("woot test2");
       }
       
       // This event thingy is triggered when you click the submit button.
       handleSubmit = event => {
         event.preventDefault();
-        console.log("woot test2");
+
 
         // Creating a object to hold all our login info and send it to API
-        const loginInfo = {
+        const SignupInfo = {
           username: this.state.username,
+          name: this.state.name,
           password: this.state.password,
           email : this.state.email
         };
         
         // Performing the post request, first paramter is the URL for where the API is located, second is the data we are sending, probably as a JSON packet.
-        console.log("username is: " + loginInfo.username + " and password is " + loginInfo.password);
+        console.log("username is: " + SignupInfo.username + " and password is " + SignupInfo.password + ", and email is " + SignupInfo.email + ", name is " + SignupInfo.name);
         // Placeholder URL below
 
         const ops = {
             method: 'POST',
             headers: { 'content-type': 'application/json' },
-            data: JSON.stringify(loginInfo) ,
-            url: "http://localhost:5000/users/SignUp"
+            data: JSON.stringify(SignupInfo) ,
+            url: "http://localhost:5000/users/createAccount"
         }
         axios(ops)
           .then(res => {
               // Get the response here, do something with it here
-              // On successful login, we recieve a Javascript Web Token (JWT). We need to save this somewhere locally so we can use it to get authorization to load other pages.
+              console.log("SIGNUP SUCCESSFUL :)");
+              console.log(res);
+              // On successful SignUp, we recieve a Javascript Web Token (JWT). We need to save this somewhere locally so we can use it to get authorization to load other pages.
+              // Ian, I don't know how to call the continue event thing thats at the top of this page so I can replace the next line with that. Think you can do that? Also for Login.js
               this.props.nextStep();
-                console.log(res.data);
+                
           }).catch((error) => {
               // There was an error sent back, so read the String sent back and act accordingly.
-              if(error.response.data.message === "Authorization Unsuccessful") {
-                  // If we got here, the user's login details were not in the database.
-                  console.log("INCORRECT LOGIN DETAILS");
-              }
-              else if(error.response.data.message === "Authorization Unsuccessful, confirm email") {
-                  // If we got here, the user's email was unverifed.
-                  console.log("EMAIL UNVERIFIED")
+              if(error.response.data.message === "User already exists") {
+                  // If we got here, then the user being created already exists
+                  console.log("USER ALREADY EXISTS");
               }
               else {
-                  // If we got here, some unknown error occured.
-                  console.log("SOME UNKNOWN ERROR :(");
-              }
+                // If we got here, some unknown error occured.
+                console.log("SOME UNKNOWN ERROR :(");
+
+            }
+
           });
           
       }
@@ -118,6 +125,7 @@ export class SignUp extends Component {
                                 label="Username"
                                 variant="outlined"
                                 fullWidth={true}
+                                onChange={this.handleChangeUsername}
                             />
                         </Grid>
 
@@ -128,6 +136,7 @@ export class SignUp extends Component {
                                 label="Email"
                                 variant="outlined"
                                 fullWidth={true}
+                                onChange={this.handleChangeEmail}
                             />
                         </Grid>
 
@@ -138,6 +147,7 @@ export class SignUp extends Component {
                                 label="Name"
                                 variant="outlined"
                                 fullWidth={true}
+                                onChange={this.handleChangeName}
                             />
                         </Grid>
 
@@ -149,6 +159,7 @@ export class SignUp extends Component {
                                 type='password'
                                 variant="outlined"
                                 fullWidth={true}
+                                onChange={this.handleChangePassword}
                             />
                         </Grid>
 
@@ -158,7 +169,7 @@ export class SignUp extends Component {
                             variant='contained'
                             color="secondary"
                             fullWidth={true}
-                            onClick={this.continue}
+                            onClick={this.handleSubmit}
                         >
                             Confirm
                         </Button>

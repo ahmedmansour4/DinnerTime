@@ -17,7 +17,8 @@ const useStyles = makeStyles(() => ({
 
 export class Login extends Component {
 
-    continue = e => {
+
+    nextStep = e => {
         e.preventDefault()
         this.props.nextStep()
     }
@@ -62,10 +63,12 @@ export class Login extends Component {
         }
         axios(ops)
           .then(res => {
-              // Get the response here, do something with it here
-              // On successful login, we recieve a Javascript Web Token (JWT). We need to save this somewhere locally so we can use it to get authorization to load other pages.
-              this.props.nextStep();
-                console.log(res.data);
+                // Get the response here, do something with it here
+                // On successful login, we recieve a Javascript Web Token (JWT). We need to save this somewhere locally so we can use it to get authorization to load other pages.
+                this.props.updateUsername(loginInfo.username);
+                this.props.nextStep();
+                
+            
           }).catch((error) => {
               // There was an error sent back, so read the String sent back and act accordingly.
               if(error.response.data.message === "Authorization Unsuccessful") {
@@ -105,6 +108,7 @@ export class Login extends Component {
                         <Grid item xs={6}>
                         <TextField
                             required
+                            defaultValue=''
                             id="outlined-required"
                             label="Username"
                             variant="outlined"
@@ -115,6 +119,7 @@ export class Login extends Component {
                         <Grid item xs={6}>
                         <TextField 
                             required
+                            defaultValue=''
                             id="outlined-required"
                             label="Password"
                             type='password'

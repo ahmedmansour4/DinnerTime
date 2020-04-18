@@ -17,14 +17,29 @@ const useStyles = makeStyles((theme) => ({
 
 export class FindFood extends Component {
 
+    componentDidMount() {
+        let currentComponent = this;
+        if ("geolocation" in navigator) {
+          console.log("Available");
+          navigator.geolocation.getCurrentPosition(function(position) {
+            console.log("Latitude is :", position.coords.latitude);
+            console.log("Longitude is :", position.coords.longitude);
+            currentComponent.props.updateLatitude(position.coords.latitude);
+            currentComponent.props.updateLongitude(position.coords.longitude);
+          });
+        } else {
+          console.log("Not Available");
+        }
+    }
+
     continue = e => {
         e.preventDefault()
         this.props.nextStep()
     }
 
-    goToAddFriends = e => {
+    goToFavoritesList = e => {
         e.preventDefault()
-        this.props.goToAddFriends()
+        this.props.goToFavoritesList()
     }
 
     goToFindFood = e => {
@@ -78,9 +93,9 @@ export class FindFood extends Component {
                             variant='contained'
                             color="secondary"
                             fullWidth={true}
-                            onClick={this.goToAddFriends}
+                            onClick={this.goToFavoritesList}
                         >
-                            Add Friend
+                            View Favorites
                         </Button>
                         </Grid>
                 </Grid>

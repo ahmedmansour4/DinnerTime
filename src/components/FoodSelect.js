@@ -27,42 +27,17 @@ export class FoodSelect extends Component {
     }
     
 
-    handleChangeFoodChinese = event => {
-        this.setState({ Food: "Chinese" });
-        console.log("Chinese was selected");
-
-      }
-
-      handleChangeFoodAmerican = event => {
-        this.setState({ Food: "American" });
-        console.log("American was selected");
-
-      }
-
-      handleChangeFoodMexican = event => {
-        this.setState({ Food: "Mexican" });
-        console.log("Mexican was selected");
-
-      }
-      
-      handleSubmit = event => {
+      handleSubmit = input => event => {
+        console.log("food is " + input);
         event.preventDefault();
-        console.log("food is " + this.state.Food);
 
-        
-        this.props.nextStep()
-        // Creating a object to hold all our login info and send it to API
-        //const loginInfo = {
-          //username: this.state.username,
-          //password: this.state.password
-        //};
-        
-        // Performing the post request, first paramter is the URL for where the API is located, second is the data we are sending, probably as a JSON packet.
-        //console.log("username is: " + loginInfo.username + " and password is " + loginInfo.password);
-        // Placeholder URL below
+        this.props.updateFoodTypes(input);
 
+        console.log("test: ");
+        this.props.nextStep();
           
       }
+
     render() {
         const { handleChange } = this.props
 
@@ -89,7 +64,7 @@ export class FoodSelect extends Component {
                         <Button
                             variant='contained'
                             color="secondary"
-                            onClick={this.handleChangeFoodChinese}
+                            onClick={this.handleSubmit("Chinese")}
                             fullWidth={true}
                             
                         >
@@ -101,7 +76,7 @@ export class FoodSelect extends Component {
                         <Button 
                             variant='contained'
                             color="secondary"
-                            onClick={this.handleChangeFoodAmerican}
+                            onClick={this.handleSubmit("American")}
                             fullWidth={true}
                         >
                             American
@@ -112,7 +87,7 @@ export class FoodSelect extends Component {
                         <Button 
                             variant='contained'
                             color="secondary"
-                            onClick={this.handleChangeFoodMexican}
+                            onClick={this.handleSubmit("Mexican")}
                             fullWidth={true}
         
                         >
