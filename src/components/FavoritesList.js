@@ -1,10 +1,9 @@
 import React, { Component } from 'react'
-import axios from 'axios';
 import Grid from '@material-ui/core/Grid'
 
 import { Button, Typography} from '@material-ui/core'
 import { makeStyles } from '@material-ui/styles'
-import RestaurantCard from './RestaurantCard';
+import FavoriteCard from './FavoriteCard'
 
 
 const useStyles = makeStyles(() => ({
@@ -37,9 +36,15 @@ export class FavoritesList extends Component {
                         </Grid>
 
 						{/* Friend Cards */}
-                        { this.props.favorites.map((name, address, phone, website) => 
+                        { this.props.favorites.map(({name, address, phone, rating, website}) => 
                             <Grid item xs={12} sm={6} lg={2}>
-							    <RestaurantCard name={name} address={address} phone={phone} website={website}/>
+                                <FavoriteCard 
+                                    name={name}
+                                    address={address}
+                                    phone={phone}
+                                    rating={rating}
+                                    website={website}
+                                />
                             </Grid>
                         )}
 

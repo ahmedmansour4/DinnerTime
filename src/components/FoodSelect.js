@@ -39,7 +39,6 @@ export class FoodSelect extends Component {
       }
 
     render() {
-        const { handleChange } = this.props
 
         return (
             
@@ -58,72 +57,19 @@ export class FoodSelect extends Component {
                         </Typography>
                         </Grid>
 
-
-                        {/* List of Food Types */}
-                        <Grid item xs={12} sm={7}>
-                        <Button
-                            variant='contained'
-                            color="secondary"
-                            onClick={this.handleSubmit("Chinese")}
-                            fullWidth={true}
-                            
-                        >
-                            Chinese
-                        </Button>
-                        </Grid>
-
-                        <Grid item xs={12} sm={7}>
-                        <Button 
-                            variant='contained'
-                            color="secondary"
-                            onClick={this.handleSubmit("American")}
-                            fullWidth={true}
-                        >
-                            American
-                        </Button>
-                        </Grid>
-
-                        <Grid item xs={12} sm={7}>
-                        <Button 
-                            variant='contained'
-                            color="secondary"
-                            onClick={this.handleSubmit("Mexican")}
-                            fullWidth={true}
-        
-                        >
-        
-                            Mexican
-                        </Button>
-                        </Grid>
-
-                        {/* Next and Back Buttons */}
-                        <Grid item container xs={12} 
-                            justify='center'
-                            alignItems='stretch'
-                            spacing={3}
-                        >        
-                                <Grid item xs={6} sm={4}>
-                                <Button 
+                        { this.props.possibleFoodTypes.map(type => 
+                            <Grid item xs={12} sm={6} lg={2}>
+							    <Button
                                     variant='contained'
                                     color="secondary"
+                                    onClick={this.handleSubmit(type)}
                                     fullWidth={true}
-                                    onClick={this.goBack}
                                 >
-                                    Back
+                                    {type}
                                 </Button>
-                                </Grid>
+                            </Grid>
+                        )}
 
-                                <Grid item xs={6} sm={4}>
-                                <Button 
-                                    variant='contained'
-                                    color="secondary"
-                                    fullWidth={true}
-                                    onClick={this.handleSubmit}
-                                >
-                                    Next
-                                </Button>
-                                </Grid>
-                        </Grid>
                 </Grid>
             </Grid>
         )

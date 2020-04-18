@@ -22,12 +22,24 @@ export class UserForm extends Component {
         radius: 8046.7,
         latitude: 28.5619217,
         longitude: -81.1640778,
-        favorites: [{
-            restaurantName: "Chick-fil-a",
-	        restaurantAddress: "10620 W Colonial Dr, Ocoee FL 34761 United States",
-	        restaurantPhone: "407-555-5555",
-	        websiteUrl: "chicken@gmail.com"
-        }],
+        favorites: [
+            {
+                name: 'Fav1',
+                address: '1234 Way',
+                rating: 2.2,
+                website: 'fav1.com',
+                phone: '123456589',
+                place_id: ''
+            },
+            {
+                name: 'Fav2',
+                address: '1234 Way 2',
+                rating: 4.2,
+                website: 'fav2.com',
+                phone: '12345658933',
+                place_id: ''
+            }
+        ],
         token: '',
         selectedRestaurant: {
             name: '',
@@ -157,6 +169,7 @@ export class UserForm extends Component {
                         handleChange={this.handleChange}
                         updateFoodTypes={this.updateFoodTypes}
                         value={ values }
+                        possibleFoodTypes={this.state.possibleFoodTypes}
                     />
                 )
             case 3:
