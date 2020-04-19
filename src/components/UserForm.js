@@ -159,6 +159,7 @@ export class UserForm extends Component {
                 return (
                     <FindFood
                         nextStep={this.nextStep}
+                        prevStep={this.prevStep}
                         goToFavoritesList={this.goToFavoritesList}
                         goToConfirm={this.goToConfirm}
                         handleChange={this.handleChange}

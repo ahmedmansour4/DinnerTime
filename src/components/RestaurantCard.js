@@ -10,6 +10,7 @@ import IconButton from '@material-ui/core/IconButton'
 import FavoriteIcon from '@material-ui/icons/Favorite'
 import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 import StarRateIcon from '@material-ui/icons/StarRate'
+import {API_URL} from './URLConstants'
 
 const useStyles = makeStyles({
     root: {
@@ -60,7 +61,7 @@ export class RestaurantCard extends Component {
                 'authorization': this.props.JWT
                     },
             data: JSON.stringify(favRequest) ,
-            url: "http://localhost:5000/users/addFavorite/" + this.props.userId
+            url: API_URL + "/users/addFavorite/" + this.props.userId
         }
         axios(ops)
           .then(res => {

@@ -4,6 +4,8 @@ import axios from 'axios';
 import { Button, Typography} from '@material-ui/core'
 import { makeStyles } from '@material-ui/styles'
 import FavoriteCard from './FavoriteCard'
+import {API_URL} from './URLConstants'
+
 
 
 const useStyles = makeStyles(() => ({
@@ -40,7 +42,7 @@ export class FavoritesList extends Component {
                 'content-type': 'application/json',  
                 'authorization': this.props.JWT
                     },
-            url: "http://localhost:5000/users/getFavorites/" + this.props.userId
+            url: API_URL + "/users/getFavorites/" + this.props.userId
           }
           axios(ops)
               .then(res => {
@@ -78,7 +80,7 @@ export class FavoritesList extends Component {
                 'content-type': 'application/json',  
                 'authorization': this.props.JWT
                     },
-            url: "http://localhost:5000/users/deleteFavorite/" + this.props.userId + "&" + this.state.favorites[id].restarauntId
+            url: API_URL + "/users/deleteFavorite/" + this.props.userId + "&" + this.state.favorites[id].restarauntId
           }
           axios(ops)
               .then(res => {

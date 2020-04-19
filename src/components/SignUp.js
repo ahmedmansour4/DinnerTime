@@ -7,6 +7,7 @@ import { Button, Typography } from '@material-ui/core'
 import { makeStyles } from '@material-ui/styles'
 
 import TextField from '@material-ui/core/TextField'
+import {API_URL} from './URLConstants'
 
 
 const useStyles = makeStyles(() => ({
@@ -74,7 +75,7 @@ export class SignUp extends Component {
             method: 'POST',
             headers: { 'content-type': 'application/json' },
             data: JSON.stringify(SignupInfo) ,
-            url: "http://localhost:5000/users/createAccount"
+            url: API_URL + "/users/createAccount"
         }
         axios(ops)
           .then(res => {
@@ -93,6 +94,7 @@ export class SignUp extends Component {
               }
               else {
                 // If we got here, some unknown error occured.
+                console.log(ops)
                 console.log("SOME UNKNOWN ERROR :(");
 
             }

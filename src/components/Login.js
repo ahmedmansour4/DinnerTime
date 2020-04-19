@@ -7,6 +7,7 @@ import { Button, Typography } from '@material-ui/core'
 import { makeStyles } from '@material-ui/styles'
 
 import TextField from '@material-ui/core/TextField'
+import {API_URL} from './URLConstants'
 
 
 const useStyles = makeStyles(() => ({
@@ -53,7 +54,7 @@ export class Login extends Component {
             method: 'POST',
             headers: { 'content-type': 'application/json' },
             data: JSON.stringify(loginInfo) ,
-            url: "http://localhost:5000/users/login"
+            url: API_URL + "/users/login"
         }
         axios(ops)
           .then(res => {

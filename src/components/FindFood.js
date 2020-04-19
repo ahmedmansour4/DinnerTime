@@ -7,6 +7,7 @@ import Fastfood from '@material-ui/icons/Fastfood'
 import { makeStyles } from '@material-ui/styles'
 import CasinoIcon from '@material-ui/icons/Casino';
 import FavoriteIcon from '@material-ui/icons/Favorite';
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -37,6 +38,10 @@ export class FindFood extends Component {
     continue = e => {
         e.preventDefault()
         this.props.nextStep()
+    }
+
+    prevStep = e => {
+        this.props.prevStep()
     }
 
     goToConfirm = e => {
@@ -106,6 +111,17 @@ export class FindFood extends Component {
                             startIcon={<FavoriteIcon />}
                         >
                             View Favorites
+                        </Button>
+                        </Grid>
+                        <Grid item xs={12} sm={7}>
+                        <Button 
+                            variant='contained'
+                            color="secondary"
+                            fullWidth={true}
+                            onClick={this.prevStep}
+                            startIcon={<ExitToAppIcon />}
+                        >
+                            Log Out
                         </Button>
                         </Grid>
                 </Grid>
