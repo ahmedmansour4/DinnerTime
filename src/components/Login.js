@@ -1,7 +1,5 @@
 import React, { Component } from 'react'
-
-
-import axios from 'axios';
+import axios from 'axios'
 
 import Grid from '@material-ui/core/Grid'
 
@@ -18,29 +16,32 @@ const useStyles = makeStyles(() => ({
 }));
 
 export class Login extends Component {
+
+
     nextStep = e => {
         e.preventDefault()
         this.props.nextStep()
     }
 
-    
+    prevStep = e => {
+        e.preventDefault()
+        this.props.prevStep()
+    }
     
     // This event thingy is triggered when a change is made to the username field, and sets the value of the field to the variable username
     handleChangeUsername = event => {
         this.setState({ username: event.target.value });
-        console.log("woot test2");
       }
 
       // This event thingy is triggered when a change is made to the password field, and sets the value of the field to the variable password
       handleChangePassword = event => {
         this.setState({ password: event.target.value });
-        console.log("woot test2");
       }
      
       // This event thingy is triggered when you click the submit button.
       handleSubmit = event => {
         event.preventDefault();
-        console.log("woot test2");
+
 
         // Creating a object to hold all our login info and send it to API
         const loginInfo = {
@@ -60,12 +61,15 @@ export class Login extends Component {
         }
         axios(ops)
           .then(res => {
-              // Get the response here, do something with it here
-              // On successful login, we recieve a Javascript Web Token (JWT). We need to save this somewhere locally so we can use it to get authorization to load other pages.
-
-              this.props.updateUsername(loginInfo.username);
-              this.props.nextStep();
-                console.log(res.data);
+                // Get the response here, do something with it here
+                // On successful login, we recieve a Javascript Web Token (JWT). We need to save this somewhere locally so we can use it to get authorization to load other pages.
+                this.props.updateUsername(loginInfo.username);
+                console.log("token is " + res.data.token);
+                this.props.setJWT(res.data.token);
+                this.props.setUserId(res.data.userId);
+                this.props.nextStep();
+                
+            
           }).catch((error) => {
               // There was an error sent back, so read the String sent back and act accordingly.
               if(error.response.data.message === "Authorization Unsuccessful") {
@@ -86,9 +90,9 @@ export class Login extends Component {
     
       // This render function controls what is displayed, it's all in HTML
     render() {
-
         return (
-            <Grid container
+            <Grid 
+                container
                 direction='column'
                 justify='center'
                 alignItems='center'
@@ -103,17 +107,46 @@ export class Login extends Component {
                         </Typography>
                         </Grid>
                         <Grid item xs={6}>
-                            <TextField required id="outlined-required" label="Username" variant="outlined" fullWidth={true} onChange={this.handleChangeUsername}/>
-                            
+                        <TextField
+                            required
+                            defaultValue=''
+                            id="outlined-required"
+                            label="Username"
+                            variant="outlined"
+                            fullWidth={true}
+                            onChange={this.handleChangeUsername}
+                        />
                         </Grid>
-
                         <Grid item xs={6}>
-                            <TextField required id="outlined-required" label="Password" type='password' variant="outlined" fullWidth={true} onChange={this.handleChangePassword}/>
+                        <TextField 
+                            required
+                            defaultValue=''
+                            id="outlined-required"
+                            label="Password"
+                            type='password'
+                            variant="outlined"
+                            fullWidth={true}
+                            onChange={this.handleChangePassword}
+                        />
                         </Grid>
                         <Grid item xs={12} sm={7}>
-                        <Button variant='contained' color="secondary" fullWidth={true} onClick={this.handleSubmit}
+                        <Button
+                            variant='contained'
+                            color="secondary"
+                            fullWidth={true}
+                            onClick={this.handleSubmit}
                         >
                             Login
+                        </Button>
+                        </Grid>
+                        <Grid item xs={12} sm={7}>
+                        <Button 
+                            variant='contained'
+                            color="secondary"
+                            fullWidth={true}
+                            onClick={this.prevStep}
+                        >
+                            Sign Up
                         </Button>
                         </Grid>
                 </Grid>
