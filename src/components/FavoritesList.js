@@ -62,7 +62,7 @@ export class FavoritesList extends Component {
                                     variant='contained'
                                     color="secondary"
                                     fullWidth={true}
-                                    onClick={this.goBack}
+                                    onClick={this.goToFindFood}
                                 >
                                     Back
                                 </Button>

@@ -123,7 +123,12 @@ export class UserForm extends Component {
         console.log(this.state.selectedRestaurant)
     }
 
-
+    addToFavorites = restaraunt => {
+        this.setState(prevState => ({
+            favorites: [...prevState.favorites, {restaraunt}],
+        }));
+    }
+    
 
 
     render() {

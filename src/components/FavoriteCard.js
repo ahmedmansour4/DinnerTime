@@ -7,7 +7,7 @@ import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import { CardHeader } from '@material-ui/core';
 import IconButton from '@material-ui/core/IconButton'
-import FavoriteIcon from '@material-ui/icons/Favorite'
+import DeleteIcon from '@material-ui/icons/Delete'
 
 const useStyles = makeStyles(() => ({
     card: {
@@ -16,31 +16,24 @@ const useStyles = makeStyles(() => ({
 }));
 
 
-
-export class RestaurantCard extends Component {
-
-    
-addToFavorites = (restaurant) => {
-    this.props.addToFavorites(this.props.restaurant)
-}
-
+export class FavoriteCard extends Component {
     render() {
         return (
             <Card className={useStyles.card}>
                 <CardHeader
-                    title={<Typography align='center' variant='h3'>{this.props.restaurant.name}</Typography>}
+                    title={<Typography align='center' variant='h3'>{this.props.name}</Typography>}
                 />
                 <CardContent>
                 <Typography align='center' variant='h5'>
-                    {this.props.restaurant.address}
-                    {this.props.restaurant.rating}
-                    {this.props.restaurant.website}
-                    {this.props.restaurant.phone}
+                    {this.props.address}
+                    {this.props.rating}
+                    {this.props.website}
+                    {this.props.phone}
                 </Typography>
                 </CardContent>
                 <CardActions>
-                    <IconButton onClick={this.addToFavorites}>
-                        <FavoriteIcon fontSize="large" />
+                    <IconButton onClick={console.log('Adding'+this.props.name+'to favorites.')}>
+                        <DeleteIcon fontSize="large" />
                     </IconButton>
                 </CardActions>
             </Card>
@@ -48,4 +41,4 @@ addToFavorites = (restaurant) => {
     }
 }
 
-export default RestaurantCard
+export default FavoriteCard

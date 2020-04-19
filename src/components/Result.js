@@ -98,7 +98,10 @@ export class Result extends Component {
         this.props.goToFindFood();
     }
 
-
+    addToFavorites = (restaurant) => {
+        this.props.addToFavorites(restaurant)
+    }
+    
 
   render() {
     
