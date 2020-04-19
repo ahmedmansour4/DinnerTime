@@ -49,10 +49,6 @@ export class Login extends Component {
           password: this.state.password
         };
         
-        // Performing the post request, first paramter is the URL for where the API is located, second is the data we are sending, probably as a JSON packet.
-        console.log("username is: " + loginInfo.username + " and password is " + loginInfo.password);
-        // Placeholder URL below
-
         const ops = {
             method: 'POST',
             headers: { 'content-type': 'application/json' },
@@ -64,9 +60,10 @@ export class Login extends Component {
                 // Get the response here, do something with it here
                 // On successful login, we recieve a Javascript Web Token (JWT). We need to save this somewhere locally so we can use it to get authorization to load other pages.
                 this.props.updateUsername(loginInfo.username);
+                this.props.setJWT(res.data.token);
+                this.props.setUserId(res.data.userId);
                 this.props.nextStep();
-                
-            
+                 
           }).catch((error) => {
               // There was an error sent back, so read the String sent back and act accordingly.
               if(error.response.data.message === "Authorization Unsuccessful") {

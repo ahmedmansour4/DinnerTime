@@ -1,7 +1,7 @@
 import React from 'react'
 import { AppBar, Toolbar, Typography, IconButton } from '@material-ui/core'
 import { makeStyles } from '@material-ui/styles'
-import Menu from '@material-ui/icons/Menu'
+import RestaurantMenuIcon from '@material-ui/icons/RestaurantMenu';
 
 const useStyles = makeStyles(() => ({
     typographyStyles: {
@@ -14,9 +14,9 @@ const Header = () => {
         <AppBar position='static'>
             <Toolbar>
                 <IconButton>
-                    <Menu />
+                    <RestaurantMenuIcon fontSize="large"/>
                 </IconButton>
-                <Typography className={useStyles.typographyStyles}>
+                <Typography className={useStyles.typographyStyles} variant='h5'>
                     Dinner Time
                 </Typography>
             </Toolbar>

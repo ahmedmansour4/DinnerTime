@@ -3,9 +3,7 @@ import React, { Component } from 'react'
 import Login from './Login'
 import FindFood from './FindFood'
 import FoodSelect from './FoodSelect'
-import FriendSelect from './FriendSelect'
 import SignUp from './SignUp'
-import AddFriend from './AddFriend'
 import Confirm from './Confirm'
 import FavoritesList from './FavoritesList'
 import Result from './Result'
@@ -17,37 +15,22 @@ export class UserForm extends Component {
         step: 0,
         emailConfirmed: false,
         username: '',
+        userId: '',
         foodTypes: '',
-        possibleFoodTypes: ['Chinese', 'Mexican', 'American', 'Italian'],
+        possibleFoodTypes: ['Chinese', 'Mexican', 'American', 'Italian', 'Japanese', 'Greek'],
         radius: 8046.7,
         latitude: 28.5619217,
         longitude: -81.1640778,
-        favorites: [
-            {
-                name: 'Fav1',
-                address: '1234 Way',
-                rating: 2.2,
-                website: 'fav1.com',
-                phone: '123456589',
-                place_id: ''
-            },
-            {
-                name: 'Fav2',
-                address: '1234 Way 2',
-                rating: 4.2,
-                website: 'fav2.com',
-                phone: '12345658933',
-                place_id: ''
-            }
-        ],
-        token: '',
+        JWT: '',
+        favorites: [],
         selectedRestaurant: {
             name: '',
             address: '',
             rating: 0,
             website: '',
             phone: '',
-            place_id: ''
+            place_id: '',
+            restarauntId: ''
         }
     }
 
@@ -69,15 +52,24 @@ export class UserForm extends Component {
         })
     }
 
-    goToFavoritesList = () => {
-        const { step } = this.state
+    //used when user clicks for a random food selection
+    goToConfirm = () => {
+
+        var selection = Math.floor(Math.random() * Math.floor(this.state.possibleFoodTypes.length));
+
+        this.setState({
+            step: 3,
+            foodTypes: this.state.possibleFoodTypes[selection]
+        })
+    }
+
+    goToFavoritesList = () => {  
         this.setState(
             { step: 100 }
         )
     }
 
     goToFindFood = () => {
-        const { step } = this.state
         this.setState({
             step: 1
         })
@@ -104,9 +96,15 @@ export class UserForm extends Component {
         this.setState({latitude: latitude});
     }
 
+    setJWT = JWT => {
+        this.setState({JWT: JWT});
+    }
+
+    setUserId = userId => {
+        this.setState({userId: userId});
+    }
     setRadius = milesRadius => {
         this.setState({radius: (milesRadius*1609.34)})
-        console.log(milesRadius)
     }
 
     setSelectedRestaurant = (selectedRestaurant) => {
@@ -152,6 +150,8 @@ export class UserForm extends Component {
                         prevStep={this.prevStep}
                         handleChange={this.handleChange}
                         updateUsername={this.updateUsername}
+                        setJWT={this.setJWT}
+                        setUserId={this.setUserId}
                         value={ values }
                     />
                 )
@@ -160,6 +160,7 @@ export class UserForm extends Component {
                     <FindFood
                         nextStep={this.nextStep}
                         goToFavoritesList={this.goToFavoritesList}
+                        goToConfirm={this.goToConfirm}
                         handleChange={this.handleChange}
                         value={ values }
                         updateLongitude={this.updateLongitude}
@@ -200,6 +201,8 @@ export class UserForm extends Component {
                         setSelectedRestaurant={this.setSelectedRestaurant}
                         goToFindFood={this.goToFindFood}
                         addToFavorites={this.addToFavorites}
+                        JWT={this.state.JWT}
+                        userId={this.state.userId}
                     />
                 )
             case 100:
@@ -207,8 +210,23 @@ export class UserForm extends Component {
                     <FavoritesList
                         goToFindFood={this.goToFindFood}
                         favorites={this.state.favorites}
+                        username = {this.state.username}
+                        JWT = {this.state.JWT}
+                        userId = {this.state.userId}
                     />
                 )
+                default:
+                    return (
+                        <Login
+                            nextStep={this.nextStep}
+                            prevStep={this.prevStep}
+                            handleChange={this.handleChange}
+                            updateUsername={this.updateUsername}
+                            setJWT={this.setJWT}
+                            setUserId={this.setUserId}
+                            value={ values }
+                        />
+                    )
         }
     }
 }

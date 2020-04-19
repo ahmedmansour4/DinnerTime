@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import axios from 'axios';
 import Grid from '@material-ui/core/Grid'
 
 import { Button, Typography} from '@material-ui/core'
@@ -58,12 +57,13 @@ export class FoodSelect extends Component {
                         </Grid>
 
                         { this.props.possibleFoodTypes.map(type => 
-                            <Grid item xs={12} sm={6} lg={2}>
+                            <Grid item key={type} xs={12} sm={6} lg={2}>
 							    <Button
                                     variant='contained'
                                     color="secondary"
                                     onClick={this.handleSubmit(type)}
                                     fullWidth={true}
+                                    key={type}
                                 >
                                     {type}
                                 </Button>

@@ -5,6 +5,8 @@ import Grid from '@material-ui/core/Grid'
 import { Button, Typography} from '@material-ui/core'
 import Fastfood from '@material-ui/icons/Fastfood'
 import { makeStyles } from '@material-ui/styles'
+import CasinoIcon from '@material-ui/icons/Casino';
+import FavoriteIcon from '@material-ui/icons/Favorite';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -37,6 +39,11 @@ export class FindFood extends Component {
         this.props.nextStep()
     }
 
+    goToConfirm = e => {
+        e.preventDefault()
+        this.props.goToConfirm()
+    }
+
     goToFavoritesList = e => {
         e.preventDefault()
         this.props.goToFavoritesList()
@@ -48,7 +55,7 @@ export class FindFood extends Component {
     }
     
     render() {
-        const {values, handleChange} = this.props
+        const { handleChange} = this.props
 
         return (
             <Grid container
@@ -72,8 +79,9 @@ export class FindFood extends Component {
                             color="secondary"
                             fullWidth={true}
                             onClick={this.continue}
+                            startIcon={<Fastfood />}
                         >
-                            <Fastfood />
+                            Dinner Time
                         </Button>
                         </Grid>
 
@@ -83,7 +91,8 @@ export class FindFood extends Component {
                             color="secondary"
                             onChange={handleChange('foodTypes')}
                             fullWidth={true}
-                            onClick={this.continue}
+                            onClick={this.goToConfirm}
+                            startIcon={<CasinoIcon />}
                         >
                             Random
                         </Button>
@@ -94,6 +103,7 @@ export class FindFood extends Component {
                             color="secondary"
                             fullWidth={true}
                             onClick={this.goToFavoritesList}
+                            startIcon={<FavoriteIcon />}
                         >
                             View Favorites
                         </Button>

@@ -2,9 +2,7 @@ import React, { Component } from 'react'
 import Grid from '@material-ui/core/Grid'
 import { Button, Typography} from '@material-ui/core'
 import axios from 'axios';
-import Fastfood from '@material-ui/icons/Fastfood'
 import { makeStyles } from '@material-ui/styles'
-import {Map, InfoWindow, Marker, GoogleApiWrapper} from 'google-maps-react';
 
 //card stuff
 import RestaurantCard from './RestaurantCard'
@@ -120,13 +118,15 @@ export class Result extends Component {
                 </Typography>
             </Grid>
             <Grid item container spacing={3} justify='center'>
-                <Grid item>
+                <Grid item xs={12} sm={6}>
                     <RestaurantCard 
                         restaurant={this.state.selectedRestaurant}
                         addToFavorites={this.addToFavorites}
+                        JWT={this.props.JWT}
+                        userId={this.props.userId}
                     />
                 </Grid>
-                <Grid item>
+                <Grid item xs={12} sm={7}>
                     <Button 
                         variant='contained'
                         color="secondary"

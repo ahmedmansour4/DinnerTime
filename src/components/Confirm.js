@@ -1,12 +1,10 @@
 import React, { Component } from 'react'
-import axios from 'axios'
 
 import Grid from '@material-ui/core/Grid'
 
 import { Button, Typography } from '@material-ui/core'
 import { makeStyles } from '@material-ui/styles'
 import Slider from '@material-ui/core/Slider'
-import {Map, InfoWindow, Marker, GoogleApiWrapper} from 'google-maps-react';
 
 
 
@@ -18,16 +16,9 @@ const useStyles = makeStyles(() => ({
 
 export class Confirm extends Component {
 
-    
-
-
-    
-
     setRadius = radius => {
         this.props.setRadius(radius)
     }
-
-    
 
     nextStep = e => {
 
