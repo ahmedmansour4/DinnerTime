@@ -30,28 +30,32 @@ export class FindFood extends Component {
         } else {
           console.log("Not Available");
         }
-      }
+    }
 
-    //handleLocation = event => {
-        //this.props.updateLocation(position.coords.latitude, position.coords.longitude);
-   // }
     continue = e => {
         e.preventDefault()
         this.props.nextStep()
     }
 
-    goToAddFriends = e => {
+    goToConfirm = e => {
         e.preventDefault()
-        this.props.goToAddFriends()
+        this.props.goToConfirm()
+    }
+
+    goToFavoritesList = e => {
+        e.preventDefault()
+        this.props.goToFavoritesList()
+    }
+
+    goToFindFood = e => {
+        e.preventDefault()
+        this.props.goToFindFood()
     }
     
-    
-
     render() {
         const {values, handleChange} = this.props
 
         return (
-            
             <Grid container
                 direction='column'
                 justify='center'
@@ -84,12 +88,21 @@ export class FindFood extends Component {
                             color="secondary"
                             onChange={handleChange('foodTypes')}
                             fullWidth={true}
-                            onClick={this.continue}
+                            onClick={this.goToConfirm}
                         >
                             Random
                         </Button>
                         </Grid>
-                       
+                        <Grid item xs={12} sm={7}>
+                        <Button 
+                            variant='contained'
+                            color="secondary"
+                            fullWidth={true}
+                            onClick={this.goToFavoritesList}
+                        >
+                            View Favorites
+                        </Button>
+                        </Grid>
                 </Grid>
             </Grid>
         )

@@ -17,7 +17,16 @@ const useStyles = makeStyles(() => ({
 
 export class SignUp extends Component {
 
-    // Add functions here
+    constructor(props){
+        super(props);
+    
+        this.state = {
+            username: '',
+            name: '',
+            password: '',
+            email: ''
+        }
+    }
 
     continue = e => {
         e.preventDefault()
@@ -27,31 +36,27 @@ export class SignUp extends Component {
     // This event thingy is triggered when a change is made to the username field, and sets the value of the field to the variable username
     handleChangeUsername = event => {
         this.setState({ username: event.target.value });
-        console.log("woot test2");
       }
 
       // This event thingy is triggered when a change is made to the password field, and sets the value of the field to the variable password
       handleChangePassword = event => {
         this.setState({ password: event.target.value });
-        console.log("woot test2");
       }
 
-      // This event thingy is triggered when a change is made to the name field, and sets the value of the field to the variable name
+      // This event thingy is triggered when a change is made to the password field, and sets the value of the field to the variable password
       handleChangeName = event => {
         this.setState({ name: event.target.value });
-        console.log("woot test2");
       }
      
-      // This event thingy is triggered when a change is made to the email field, and sets the value of the field to the variable email
+      // This event thingy is triggered when a change is made to the password field, and sets the value of the field to the variable password
       handleChangeEmail = event => {
         this.setState({ email: event.target.value });
-        console.log("woot test2");
       }
       
       // This event thingy is triggered when you click the submit button.
       handleSubmit = event => {
         event.preventDefault();
-        console.log("woot test2");
+
 
         // Creating a object to hold all our login info and send it to API
         const SignupInfo = {
@@ -75,9 +80,10 @@ export class SignUp extends Component {
           .then(res => {
               // Get the response here, do something with it here
               console.log("SIGNUP SUCCESSFUL :)");
+              console.log(res);
               // On successful SignUp, we recieve a Javascript Web Token (JWT). We need to save this somewhere locally so we can use it to get authorization to load other pages.
               // Ian, I don't know how to call the continue event thing thats at the top of this page so I can replace the next line with that. Think you can do that? Also for Login.js
-              this.props.continue();
+              this.props.nextStep();
                 
           }).catch((error) => {
               // There was an error sent back, so read the String sent back and act accordingly.
@@ -88,6 +94,7 @@ export class SignUp extends Component {
               else {
                 // If we got here, some unknown error occured.
                 console.log("SOME UNKNOWN ERROR :(");
+
             }
 
           });

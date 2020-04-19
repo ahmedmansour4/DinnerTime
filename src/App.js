@@ -4,7 +4,7 @@ import Grid from '@material-ui/core/Grid'
 
 // Custom Components
 import UserForm from './components/UserForm';
-import Header from './Header'
+import Header from './components/Header'
 
 class App extends Component {
   render() {

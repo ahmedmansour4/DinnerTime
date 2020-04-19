@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import axios from 'axios';
 import Grid from '@material-ui/core/Grid'
+
 import { Button, Typography} from '@material-ui/core'
 import { makeStyles } from '@material-ui/styles'
 
@@ -24,6 +25,7 @@ export class FoodSelect extends Component {
         e.preventDefault()
         this.props.prevStep()
     }
+    
 
       handleSubmit = input => event => {
         console.log("food is " + input);
@@ -35,8 +37,8 @@ export class FoodSelect extends Component {
         this.props.nextStep();
           
       }
+
     render() {
-        const { handleChange } = this.props
 
         return (
             
@@ -55,42 +57,18 @@ export class FoodSelect extends Component {
                         </Typography>
                         </Grid>
 
-
-                        {/* List of Food Types */}
-                        <Grid item xs={12} sm={7}>
-                        <Button
-                            variant='contained'
-                            color="secondary"
-                            onClick={this.handleChange}
-                            fullWidth={true}
-                            onClick={this.handleSubmit("Chinese")}
-                        >
-                            Chinese
-                        </Button>
-                        </Grid>
-
-                        <Grid item xs={12} sm={7}>
-                        <Button 
-                            variant='contained'
-                            color="secondary"
-                            onClick={this.handleSubmit("American")}
-                            fullWidth={true}
-                        >
-                            American
-                        </Button>
-                        </Grid>
-
-                        <Grid item xs={12} sm={7}>
-                        <Button 
-                            variant='contained'
-                            color="secondary"
-                            onClick={this.handleSubmit("Mexican")}
-                            fullWidth={true}
-                        >
-        
-                            Mexican
-                        </Button>
-                        </Grid>
+                        { this.props.possibleFoodTypes.map(type => 
+                            <Grid item xs={12} sm={6} lg={2}>
+							    <Button
+                                    variant='contained'
+                                    color="secondary"
+                                    onClick={this.handleSubmit(type)}
+                                    fullWidth={true}
+                                >
+                                    {type}
+                                </Button>
+                            </Grid>
+                        )}
 
                 </Grid>
             </Grid>
@@ -100,3 +78,4 @@ export class FoodSelect extends Component {
 
 
 export default FoodSelect
+

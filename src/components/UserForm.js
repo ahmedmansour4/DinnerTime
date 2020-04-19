@@ -10,6 +10,11 @@ import Confirm from './Confirm'
 import FavoritesList from './FavoritesList'
 import Result from './Result'
 
+function getRandomFoodGenre() {
+    return Math.floor(Math.random() * Math.floor(4));
+  }
+  var y = 0;
+  var foodGenres = ["Chinese", "Mexican", "American", "Italian"];
 
 export class UserForm extends Component {
 
@@ -51,6 +56,19 @@ export class UserForm extends Component {
 
         this.setState({
             step: step - 1
+        })
+    }
+
+    //used when user clicks for a random food selection
+    goToConfirm = () => {
+
+        y = getRandomFoodGenre();
+
+        const { step, foodTypes } = this.state
+
+        this.setState({
+            step: 3,
+            foodTypes: foodGenres[y]
         })
     }
 
@@ -154,6 +172,7 @@ export class UserForm extends Component {
                     <FindFood
                         nextStep={this.nextStep}
                         goToFavoritesList={this.goToFavoritesList}
+                        goToConfirm={this.goToConfirm}
                         handleChange={this.handleChange}
                         value={ values }
                         updateLongitude={this.updateLongitude}

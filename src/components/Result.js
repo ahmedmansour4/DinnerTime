@@ -6,52 +6,105 @@ import Fastfood from '@material-ui/icons/Fastfood'
 import { makeStyles } from '@material-ui/styles'
 import {Map, InfoWindow, Marker, GoogleApiWrapper} from 'google-maps-react';
 
+//card stuff
+import RestaurantCard from './RestaurantCard'
+
+
 const useStyles = makeStyles(() => ({
     typographyStyles: {
         flex: 1
     }
 }));
 
-
 export class Result extends Component {
 
-  
 
-  handleSubmit = event => {
-    const ops = {
-      method: 'GET',
-      headers: { 'content-type': 'application/json' },
-      url: "https://cors-anywhere.herokuapp.com/https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=" + this.props.latitude + "," + this.props.longitude + "&radius=" + this.props.radius + "&type=restaurant&keyword=" + this.props.foodTypes + "&key=AIzaSyDqBSIr1u7owxnrzuWY-GlULfxeTuz9kIk"
+    constructor(props) {
+        super(props);
 
-  }
-  axios(ops)
-    .then(res => {
-        // Get the response here, do something with it here
-        // TODO stuff here!
-        //this.props.updateUsername(loginInfo.username);
-        //this.props.nextStep();
-          console.log(res.data);
-    }).catch((error) => {
-        // There was an error sent back, so read the String sent back and act accordingly.
-        console.log(error);
-        if(error  === "Authorization Unsuccessful") {
-            // If we got here, the user's login details were not in the database.
-            console.log("INCORRECT LOGIN DETAILS");
+        this.state = {
+            selectedRestaurant: {
+                name: '',
+                address: '',
+                rating: '',
+                website: '',
+                phone: '',
+                place_id: ''
+            }
         }
-        else if(error  === "Authorization Unsuccessful, confirm email") {
-            // If we got here, the user's email was unverifed.
-            console.log("EMAIL UNVERIFIED")
+    }
+
+    componentDidMount() {
+        this.pickRestaurant();
+    }
+
+
+    pickRestaurant = () => {
+        console.log('in confirm:'+this.props.radius)
+        const ops = {
+          method: 'GET',
+          headers: { 'content-type': 'application/json' },
+          url: "https://cors-anywhere.herokuapp.com/https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=" + this.props.latitude + "," + this.props.longitude + "&radius=" + this.props.radius + "&type=restaurant&keyword=" + this.props.foodTypes + "&key=AIzaSyDqBSIr1u7owxnrzuWY-GlULfxeTuz9kIk"
         }
-        else {
-            // If we got here, some unknown error occured.
-            console.log("SOME UNKNOWN ERROR :(");
-        }
-    });
-  }
+        axios(ops)
+            .then(res => {
+                let pick = Math.floor(Math.random() * res.data.results.length);
+                console.log(res.data.results[pick].place_id);
+                this.getRestaurantDetails(res.data.results[pick].place_id)
+                
+            }).catch((error) => {
+                // There was an error sent back, so read the String sent back and act accordingly.
+                console.log(error);
+            });
+    }
+
+    getRestaurantDetails = id => {
+        const ops = {
+            method: 'GET',
+            headers: { 'content-type': 'application/json' },
+            url: "https://cors-anywhere.herokuapp.com/https://maps.googleapis.com/maps/api/place/details/json?place_id=" + id + "&fields=name,rating,formatted_phone_number,formatted_address,website&key=AIzaSyDqBSIr1u7owxnrzuWY-GlULfxeTuz9kIk"
+          }
+          axios(ops)
+          .then(res => {
+             
+            this.setSelectedRestaurant(res.data.result.name, 
+                res.data.result.formatted_address, 
+                res.data.result.formatted_phone_number,
+                res.data.result.rating, 
+                res.data.result.website,
+                id)
+            
+          }).catch((error) => {
+              // There was an error sent back, so read the String sent back and act accordingly.
+              console.log(error);
+          });
+    }
+
+    setSelectedRestaurant = (name, address, phone, rating, website, place_id) => {
+        const selectedRestaurant = {name, address, phone, rating, website, place_id}
+        this.setState(prevState => ({
+            selectedRestaurant: {
+                name: selectedRestaurant.name,
+                address: selectedRestaurant.address,
+                rating: selectedRestaurant.rating,
+                website: selectedRestaurant.website,
+                phone: selectedRestaurant.phone,
+                place_id: selectedRestaurant.place_id
+            }
+        }))
+    }
+
+    goToFindFood = () => {
+        this.props.goToFindFood();
+    }
+
+    addToFavorites = (restaurant) => {
+        this.props.addToFavorites(restaurant)
+    }
+    
 
   render() {
-    const { handleChange } = this.props
-
+    
     return (
         
         <Grid container
@@ -60,24 +113,29 @@ export class Result extends Component {
             alignItems='center'
             spacing={3}
         >
-            <Grid item />
-            
+
+            <Grid item xs={12} sm={7}>
+                <Typography variant='h3' align='center' className={useStyles.typographyStyles}>
+                    Here's what we found:
+                </Typography>
+            </Grid>
             <Grid item container spacing={3} justify='center'>
-
-
-
-                    <Grid item xs={12} sm={7}>
+                <Grid item>
+                    <RestaurantCard 
+                        restaurant={this.state.selectedRestaurant}
+                        addToFavorites={this.addToFavorites}
+                    />
+                </Grid>
+                <Grid item>
                     <Button 
                         variant='contained'
                         color="secondary"
-                        onClick={this.handleSubmit}
                         fullWidth={true}
+                        onClick={this.goToFindFood}
                     >
-    
-                        Press for magic!
+                        Done
                     </Button>
-                    </Grid>
-
+                </Grid>
             </Grid>
         </Grid>
     )
@@ -85,10 +143,4 @@ export class Result extends Component {
 
 }
 
-
-
-
-
-export default GoogleApiWrapper({
-    apiKey: ("AIzaSyDqBSIr1u7owxnrzuWY-GlULfxeTuz9kIk")
-  })(Result)
+export default Result
