@@ -2,7 +2,7 @@ const express = require('express');
 // This allows us to acess something outside of our server from our server
 const cors = require('cors');
 const mongoose = require('mongoose');
-const path = require(“path”);
+
 require('dotenv').config();
 
 const app = express();
@@ -11,7 +11,7 @@ const port = process.env.PORT || 5000;
 // MiddleWare
 app.use(cors());
 app.use(express.json()); // Allows us to parse JSON
-app.use(express.static(path.join(__dirname, “client/build”)));
+
 // Setup connection to MongoDB
 const uri = process.env.ATLAS_URI;
 mongoose.connect(uri, {
