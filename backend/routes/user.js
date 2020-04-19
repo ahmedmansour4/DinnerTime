@@ -102,7 +102,7 @@ router.get('/confirmEmail/:id', (req, res, next) => {
             // If the query does not return anything then the user is not
             // present within the database
             if (user.length < 1) {
-                res.status(400).json({msg: msgs.couldNotFind})
+                res.redirect('http://localhost:3000')
             }
             // If the user exists within the database and the email has not been
             // confirmed, then confirm the user's email
@@ -112,16 +112,16 @@ router.get('/confirmEmail/:id', (req, res, next) => {
                 // Save the changes to the user within the database, while also
                 // sending back a confirmation message
                 user.save()
-                    .then(() => res.status(200).json({msg: msgs.confirmed}))
-                    .catch(err => res.status(400).json('Error: ' + err));
+                    .then(() => res.redirect('http://localhost:3000'))
+                    .catch(err => res.redirect('http://localhost:3000'));
             }
             // Hitting this statement means the user already confirmed their
             // email
             else {
-                res.status(200).json({msg: msgs.alreadyConfirmed})
+                res.redirect('http://localhost:3000')
             }
         })
-        .catch(err => res.status(400).json('Error: ' + err));
+        .catch(err => res.redirect('http://localhost:3000'));
 });
 
 // This endpoint is used when login is attempted by the User
@@ -169,7 +169,8 @@ router.post('/login', (req, res, next) => {
                     });
                     return res.status(200).json({
                         message: 'Authorization Successful',
-                        token: token
+                        token: token,
+                        userId: user[0]._id
                     })
                 } else {
                     res.status(401).json({
