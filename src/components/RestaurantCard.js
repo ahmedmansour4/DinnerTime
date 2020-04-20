@@ -16,6 +16,7 @@ import Divider from '@material-ui/core/Divider';
 import Grid from '@material-ui/core/Grid';
 
 
+
 const useStyles = makeStyles({
     root: {
 			borderRadius: 12,
@@ -86,7 +87,7 @@ export class RestaurantCard extends Component {
         return (
             <Card className={useStyles.root}>
                 <CardHeader
-                    title={<Typography align='center' variant='h4'>{this.props.restaurant.name}</Typography>}
+                    title={<Typography align='center' variant='h4' letterSpacing={6}>{this.props.restaurant.name}</Typography>}
                 />
                 <CardContent className={useStyles.title}>
 								<div>

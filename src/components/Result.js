@@ -130,7 +130,7 @@ export class Result extends Component {
             alignItems='center'
             spacing={3}
         >
-				<Grid item xs={12} sm={7}></Grid>
+				<Grid item style={{height: '20vh' }} />
             <Grid item xs={12} sm={7}>
                 <Typography variant='h3' align='center' className={useStyles.typographyStyles}>
                     Here's what we found:
