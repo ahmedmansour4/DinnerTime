@@ -4,17 +4,40 @@ import axios from 'axios'
 import Grid from '@material-ui/core/Grid'
 
 import { Button, Typography } from '@material-ui/core'
-import { makeStyles } from '@material-ui/styles'
+//import { makeStyles } from '@material-ui/styles'
+import { withStyles } from '@material-ui/styles'
 import TextField from '@material-ui/core/TextField'
 import {API_URL} from './URLConstants'
 
+
+import CssBaseline from '@material-ui/core/CssBaseline';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Checkbox from '@material-ui/core/Checkbox';
+import Link from '@material-ui/core/Link';
+import Box from '@material-ui/core/Box';
+import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
+import Container from '@material-ui/core/Container';
+
 import HeaderNoMenu from './HeaderNoMenu'
 
-const useStyles = makeStyles(() => ({
+const useStyles = theme => ({
     typographyStyles: {
         flex: 1
     },
-}));
+		paper: {
+		 marginTop: theme.spacing(8),
+		 display: 'flex',
+		 flexDirection: 'column',
+		 alignItems: 'center',
+	 },
+	 form: {
+		 width: '100%', // Fix IE 11 issue.
+		 marginTop: theme.spacing(1),
+	 },
+	 submit: {
+		 margin: theme.spacing(3, 0, 2),
+	 },
+});
 
 export class Login extends Component {
 
@@ -85,80 +108,70 @@ export class Login extends Component {
 
       // This render function controls what is displayed, it's all in HTML
     render() {
-
+				const {classes} = this.props;
         return (
 					<Grid container
 							direction='column'
 					>
 					<HeaderNoMenu/>
+					<Grid item style={{height: '10vh' }}/>
+					<Container component="main" maxWidth="xs">
+						<CssBaseline />
+						<div className={classes.paper}>
+							<Typography variant='h3' align='center' className={useStyles.typographyStyles}>
+								 Welcome to Dinner Time!
+						 </Typography>
+							<form className={classes.form} noValidate>
+							<TextField
+								 required
+								 defaultValue=''
+								 id="outlined-required"
+								 label="Username"
+								 variant="outlined"
+								 fullWidth={true}
+								 onChange={this.handleChangeUsername}
+								 margin="normal"
+								 autoComplete="username"
+						 />
+								<TextField
+	 								 required
+	 								 defaultValue=''
+	 								 id="outlined-required"
+	 								 label="Password"
+	 								 type='password'
+	 								 variant="outlined"
+	 								 fullWidth={true}
+	 								 onChange={this.handleChangePassword}
+									  margin="normal"
+										autoComplete="current-password"
+	 						 />
+								<Button
+ 									 variant='contained'
+ 									 color="secondary"
+ 									 fullWidth={true}
+ 									 onClick={this.handleSubmit}
+									 className={classes.submit}
+ 							 >
+ 									 Login
+ 							 </Button>
+							 <Button
+									variant='contained'
+									color="secondary"
+									fullWidth={true}
+									onClick={this.prevStep}
+									className={classes.submit}
+							>
+									Sign Up
+							</Button>
 
-            <Grid
-                container
-                direction='column'
-                justify='center'
-                alignItems='center'
-                spacing={3}
+							</form>
+						</div>
 
-						>
-
-						<Grid item style={{height: '20vh' }}/>
-
-							 <Grid item xs={12} sm={7} container spacing={3} justify='center' alignItems='center' direction='column'>
-												<Grid item xs={12} sm={7}>
-												<Typography variant='h3' align='center' className={useStyles.typographyStyles}>
-													 Welcome to Dinner Time!
-											 </Typography>
-											 </Grid>
-											 <Grid item xs={6}>
-											 <TextField
-													 required
-													 defaultValue=''
-													 id="outlined-required"
-													 label="Username"
-													 variant="outlined"
-													 fullWidth={true}
-													 onChange={this.handleChangeUsername}
-											 />
-											 </Grid>
-											 <Grid item xs={6}>
-											 <TextField
-													 required
-													 defaultValue=''
-													 id="outlined-required"
-													 label="Password"
-													 type='password'
-													 variant="outlined"
-													 fullWidth={true}
-													 onChange={this.handleChangePassword}
-											 />
-											 </Grid>
-
-											 <Grid item xs={12} sm={7}>
-												 <Button
-														 variant='contained'
-														 color="secondary"
-														 fullWidth={true}
-														 onClick={this.handleSubmit}
-												 >
-														 Login
-												 </Button>
-												</Grid>
-												<Grid item xs={12} sm={7}>
-												 <Button
-														 variant='contained'
-														 color="secondary"
-														 fullWidth={true}
-														 onClick={this.prevStep}
-												 >
-														 Sign Up
-												 </Button>
-											 </Grid>
-							 </Grid>
-            </Grid>
+					</Container>
 
 					</Grid>
         )
     }
 }
 
-export default Login
+export default withStyles(useStyles)(Login)
