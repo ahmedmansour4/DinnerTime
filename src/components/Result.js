@@ -2,17 +2,38 @@ import React, { Component } from 'react'
 import Grid from '@material-ui/core/Grid'
 import { Button, Typography} from '@material-ui/core'
 import axios from 'axios';
-import { makeStyles } from '@material-ui/styles'
+import { withStyles } from '@material-ui/styles'
+
+import CssBaseline from '@material-ui/core/CssBaseline';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Checkbox from '@material-ui/core/Checkbox';
+import Link from '@material-ui/core/Link';
+import Box from '@material-ui/core/Box';
+import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
+import Container from '@material-ui/core/Container';
 
 //card stuff
 import RestaurantCard from './RestaurantCard'
 import Header from '../Header'
 
-const useStyles = makeStyles(() => ({
+const useStyles = theme => ({
     typographyStyles: {
         flex: 1
-    }
-}));
+    },
+		paper: {
+		 marginTop: theme.spacing(8),
+		 display: 'flex',
+		 flexDirection: 'column',
+		 alignItems: 'center',
+	 },
+	 form: {
+		 width: '100%', // Fix IE 11 issue.
+		 marginTop: theme.spacing(1),
+	 },
+	 submit: {
+		 margin: theme.spacing(3, 0, 2),
+	 },
+});
 
 export class Result extends Component {
 
@@ -114,7 +135,7 @@ export class Result extends Component {
 
 
   render() {
-
+		const {classes} = this.props;
     return (
 			<Grid container
 					direction='column'
@@ -130,32 +151,34 @@ export class Result extends Component {
             alignItems='center'
             spacing={3}
         >
-				<Grid item style={{height: '20vh' }} />
-            <Grid item xs={12} sm={7}>
+				<Grid item style={{height: '10vh' }} />
+				<Container component="main" maxWidth="md">
+				<CssBaseline />
+				<div className={classes.paper}>
                 <Typography variant='h3' align='center' className={useStyles.typographyStyles}>
-                    Here's what we found:
+                    Here's what we found
                 </Typography>
-            </Grid>
-            <Grid item container spacing={3} justify='center'>
-                <Grid item xs={12} sm={6}>
-                    <RestaurantCard
-                        restaurant={this.state.selectedRestaurant}
-                        addToFavorites={this.addToFavorites}
-                        JWT={this.props.JWT}
-                        userId={this.props.userId}
-                    />
-                </Grid>
-                <Grid item xs={12} sm={7}>
-                    <Button
-                        variant='contained'
-                        color="secondary"
-                        fullWidth={true}
-                        onClick={this.goToFindFood}
-                    >
-                        Done
-                    </Button>
-                </Grid>
-            </Grid>
+								<Grid item style={{height: '2vh' }} />
+								<form className={classes.form} noValidate>
+                <RestaurantCard
+                    restaurant={this.state.selectedRestaurant}
+                    addToFavorites={this.addToFavorites}
+                    JWT={this.props.JWT}
+                    userId={this.props.userId}
+                />
+
+                <Button
+                    variant='contained'
+                    color="secondary"
+                    fullWidth={true}
+                    onClick={this.goToFindFood}
+										className={classes.submit}
+                >
+                    Done
+                </Button>
+								</form>
+					</div>
+					</Container>
         </Grid>
 				</Grid>
     )
@@ -163,4 +186,4 @@ export class Result extends Component {
 
 }
 
-export default Result
+export default withStyles(useStyles)(Result)
