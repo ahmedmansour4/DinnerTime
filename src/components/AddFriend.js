@@ -7,7 +7,7 @@ import { Button, Typography } from '@material-ui/core'
 import { makeStyles } from '@material-ui/styles'
 
 import TextField from '@material-ui/core/TextField'
-import Header from '../Header'
+
 
 const useStyles = makeStyles(() => ({
     typographyStyles: {
@@ -24,43 +24,25 @@ export class AddFriend extends Component {
         this.props.nextStep()
     }
 
-		goToLeave = e => {
-			this.props.goToLogOut()
-		}
+    goToFindFood = e => {
+        e.preventDefault()
+        this.props.goToFindFood()
+    }
 
-		goHome = e => {
-			this.props.goHome()
-		}
-
-		getFriendList = e => {
-			this.props.getFriendList()
-		}
-
-		getFavorites = e => {
-			this.props.getFavorites()
-		}
-
+    addFriend = e => {
+        console.log('adding friend')
+    }
 
     render() {
         return (
-					<Grid container
-							direction='column'
-					>
-					<Header
-					goToLogOut={this.goToLeave}
-					goHome={this.goHome}
-					getFriendList={this.getFriendList}
-					getFavorites={this.getFavorites}
-					/>
             <Grid container
                 direction='column'
                 justify='center'
                 alignItems='center'
                 spacing={3}
-
             >
                 <Grid item />
-
+                
                 <Grid item container spacing={3} justify='center' alignItems='center' direction='column'>
                          <Grid item xs={12} sm={7}>
                          <Typography variant='h3' align='center' className={useStyles.typographyStyles}>
@@ -79,7 +61,7 @@ export class AddFriend extends Component {
                         </Grid>
 
                         <Grid item xs={12} sm={6}>
-                        <Button
+                        <Button 
                             variant='contained'
                             color="secondary"
                             fullWidth={true}
@@ -90,18 +72,17 @@ export class AddFriend extends Component {
                         </Grid>
 
                         <Grid item xs={12} sm={6}>
-                        <Button
+                        <Button 
                             variant='contained'
                             color="secondary"
                             fullWidth={true}
-                            onClick={this.goToFind}
+                            onClick={this.goToFindFood}
                         >
                             Cancel
                         </Button>
                         </Grid>
                 </Grid>
             </Grid>
-						</Grid>
         )
     }
 }

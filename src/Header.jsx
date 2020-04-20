@@ -114,7 +114,6 @@ const Header = (props) => {
 
 					                    <MenuItem onClick={goHome}>Home</MenuItem>
 					                    <MenuItem onClick={getFavorites}>Favorites</MenuItem>
-					                    <MenuItem onClick={getFriendList}>Friends</MenuItem>
 															<MenuItem onClick={goToLogOut}>Log Out</MenuItem>
 
 					                  </MenuList>

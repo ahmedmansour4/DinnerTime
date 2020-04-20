@@ -3,21 +3,35 @@ import React, { Component } from 'react'
 import Login from './Login'
 import FindFood from './FindFood'
 import FoodSelect from './FoodSelect'
-import FriendSelect from './FriendSelect'
 import SignUp from './SignUp'
-import AddFriend from './AddFriend'
-import FriendList from './FriendList'
+import Confirm from './Confirm'
 import FavoritesList from './FavoritesList'
+import Result from './Result'
 
 
 export class UserForm extends Component {
 
     state = {
-        step: 1,
+        step: 0,
+        emailConfirmed: false,
         username: '',
+        userId: '',
         foodTypes: '',
-        favoriteRestaurants: [],
-        friends:[]
+        possibleFoodTypes: ['Chinese', 'Mexican', 'American', 'Italian', 'Japanese', 'Greek'],
+        radius: 8046.7,
+        latitude: 28.5619217,
+        longitude: -81.1640778,
+        JWT: '',
+        favorites: [],
+        selectedRestaurant: {
+            name: '',
+            address: '',
+            rating: 0,
+            website: '',
+            phone: '',
+            place_id: '',
+            restarauntId: ''
+        }
     }
 
     // Go to next step
@@ -38,10 +52,85 @@ export class UserForm extends Component {
         })
     }
 
-    goToAddFriends = e => {
+    //used when user clicks for a random food selection
+    goToConfirm = () => {
+
+        var selection = Math.floor(Math.random() * Math.floor(this.state.possibleFoodTypes.length));
+
+        this.setState({
+            step: 3,
+            foodTypes: this.state.possibleFoodTypes[selection]
+        })
+    }
+
+    goToFavoritesList = () => {
+        this.setState(
+            { step: 100 }
+        )
+    }
+
+    goToFindFood = () => {
+        this.setState({
+            step: 1
+        })
+    }
+
+    // Handle feilds change
+    handleChange = input => e => {
+        this.setState({[input]: e.target.value})
+    }
+
+    updateFoodTypes = input =>  {
+        this.setState({foodTypes : input});
+      }
+
+      updateUsername = input =>  {
+        this.setState({username: input});
+      }
+
+      updateLongitude = longitude => {
+        this.setState({longitude: longitude});
+    }
+
+    updateLatitude = latitude => {
+        this.setState({latitude: latitude});
+    }
+
+    setJWT = JWT => {
+        this.setState({JWT: JWT});
+    }
+
+    setUserId = userId => {
+        this.setState({userId: userId});
+    }
+    setRadius = milesRadius => {
+        this.setState({radius: (milesRadius*1609.34)})
+    }
+
+    setSelectedRestaurant = (selectedRestaurant) => {
+        this.setState(prevState => ({
+            selectedRestaurant: {
+                name: selectedRestaurant.name,
+                address: selectedRestaurant.address,
+                rating: selectedRestaurant.rating,
+                website: selectedRestaurant.website,
+                phone: selectedRestaurant.phone,
+                place_id: selectedRestaurant.place_id
+            }
+        }))
+        console.log(this.state.selectedRestaurant)
+    }
+
+    addToFavorites = restaraunt => {
+        this.setState(prevState => ({
+            favorites: [...prevState.favorites, {restaraunt}],
+        }));
+    }
+
+		goHome = e => {
         const { step } = this.state
         this.setState({
-            step: 100
+            step: 1
         })
     }
 
@@ -52,38 +141,10 @@ export class UserForm extends Component {
         })
     }
 
-		goHome = e => {
-        const { step } = this.state
-        this.setState({
-            step: 1
-        })
-    }
-
-		getFriendList = e => {
-        const { step } = this.state
-        this.setState({
-            step: 110
-        })
-    }
-
-		getFavorites = e => {
-        const { step } = this.state
-        this.setState({
-            step: 120
-        })
-    }
-
-
-
-    // Handle feilds change
-    handleChange = input => e => {
-        this.setState({[input]: e.target.value})
-    }
-
     render() {
         const { step } = this.state
-        const { username, foodTypes, favoriteRestaurants, friends } = this.state
-        const values = { username, foodTypes, favoriteRestaurants, friends }
+        const { username, foodTypes, favorites, friends } = this.state
+        const values = { username, foodTypes, favorites, friends }
 
         switch(step) {
             case -1:
@@ -100,6 +161,9 @@ export class UserForm extends Component {
                         nextStep={this.nextStep}
                         prevStep={this.prevStep}
                         handleChange={this.handleChange}
+                        updateUsername={this.updateUsername}
+                        setJWT={this.setJWT}
+                        setUserId={this.setUserId}
                         value={ values }
                     />
                 )
@@ -107,13 +171,15 @@ export class UserForm extends Component {
                 return (
                     <FindFood
                         nextStep={this.nextStep}
-                        goToAddFriends={this.goToAddFriends}
-												goToLogOut={this.goToLogOut}
-												goHome={this.goHome}
-												getFriendList={this.getFriendList}
-												getFavorites={this.getFavorites}
+                        prevStep={this.prevStep}
+                        goToFavoritesList={this.goToFavoritesList}
+                        goToConfirm={this.goToConfirm}
                         handleChange={this.handleChange}
                         value={ values }
+                        updateLongitude={this.updateLongitude}
+                        updateLatitude={this.updateLatitude}
+												goHome={this.goHome}
+												goToLogOut={this.goToLogOut}
                     />
                 )
             case 2:
@@ -121,68 +187,75 @@ export class UserForm extends Component {
                     <FoodSelect
                         nextStep={this.nextStep}
                         prevStep={this.prevStep}
-												goToLogOut={this.goToLogOut}
-												goHome={this.goHome}
-												getFriendList={this.getFriendList}
-												getFavorites={this.getFavorites}
                         handleChange={this.handleChange}
+                        updateFoodTypes={this.updateFoodTypes}
                         value={ values }
+                        possibleFoodTypes={this.state.possibleFoodTypes}
+												goHome={this.goHome}
+												goToLogOut={this.goToLogOut}
+												goToFavoritesList={this.goToFavoritesList}
                     />
                 )
             case 3:
                 return (
-                    <FriendSelect
-                        nextStep={this.nextStep}
-                        prevStep={this.prevStep}
-												goToLogOut={this.goToLogOut}
-												goHome={this.goHome}
-												getFriendList={this.getFriendList}
-												getFavorites={this.getFavorites}
+                    <Confirm
                         handleChange={this.handleChange}
+                        nextStep={this.nextStep}
                         values={ values }
+                        foodTypes = {this.state.foodTypes}
+                        setRadius={this.setRadius}
+                        radius={this.state.radius}
+                        setSelectedRestaurant={this.setSelectedRestaurant}
+												goHome={this.goHome}
+												goToLogOut={this.goToLogOut}
+												goToFavoritesList={this.goToFavoritesList}
                     />
                 )
             case 4:
-                return <h1>Confirm</h1>
-            case 5:
-                return <h1>Success!</h1>
-            case 100:
                 return (
-                    <AddFriend
-										goToLogOut={this.goToLogOut}
-										goHome={this.goHome}
-										getFriendList={this.getFriendList}
-										getFavorites={this.getFavorites}
+                    <Result
+                        restaraunt={this.state.selectedRestaurant}
+                        longitude = {this.state.longitude}
+                        latitude = {this.state.latitude}
+                        foodTypes = {this.state.foodTypes}
+                        radius={this.state.radius}
+                        setSelectedRestaurant={this.setSelectedRestaurant}
+                        goToFindFood={this.goToFindFood}
+                        addToFavorites={this.addToFavorites}
+                        JWT={this.state.JWT}
+                        userId={this.state.userId}
+												goHome={this.goHome}
+												goToLogOut={this.goToLogOut}
+												goToFavoritesList={this.goToFavoritesList}
                     />
                 )
-						case 110:
+            case 100:
                 return (
-									<FriendList
-											nextStep={this.nextStep}
-											prevStep={this.prevStep}
-											goToLogOut={this.goToLogOut}
-											goHome={this.goHome}
-											getFriendList={this.getFriendList}
-											getFavorites={this.getFavorites}
-											handleChange={this.handleChange}
-											values={ values }
-									/>
+                    <FavoritesList
+                        goToFindFood={this.goToFindFood}
+                        favorites={this.state.favorites}
+                        username = {this.state.username}
+                        JWT = {this.state.JWT}
+                        userId = {this.state.userId}
+												goHome={this.goHome}
+												goToLogOut={this.goToLogOut}
+												goToFavoritesList={this.goToFavoritesList}
+                    />
                 )
-						case 120:
-								return (
-									<FavoritesList
-											nextStep={this.nextStep}
-											prevStep={this.prevStep}
-											goToLogOut={this.goToLogOut}
-											goHome={this.goHome}
-											getFriendList={this.getFriendList}
-											getFavorites={this.getFavorites}
-											handleChange={this.handleChange}
-											values={ values }
-									/>
-								)
+                default:
+                    return (
+                        <Login
+                            nextStep={this.nextStep}
+                            prevStep={this.prevStep}
+                            handleChange={this.handleChange}
+                            updateUsername={this.updateUsername}
+                            setJWT={this.setJWT}
+                            setUserId={this.setUserId}
+                            value={ values }
+                        />
+                    )
         }
-		}
+    }
 }
 
 export default UserForm

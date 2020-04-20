@@ -4,12 +4,10 @@ import Grid from '@material-ui/core/Grid'
 
 // Custom Components
 import UserForm from './components/UserForm';
-import HeaderForm from './HeaderForm';
-import Header from './Header'
 import { ThemeProvider } from '@material-ui/styles';
 import { createMuiTheme } from '@material-ui/core/styles';
 
-import 'bootstrap/dist/css/bootstrap.min.css';
+import 'typeface-roboto';
 
 const theme = createMuiTheme({
   palette: {
@@ -19,39 +17,33 @@ const theme = createMuiTheme({
     secondary: {
       main: '#D5E7F1',
     },
-  },
+  },/*
 	typography: {
     fontFamily: 'Segoe UI',
-  }
+  }*/
 });
-
-
 
 
 class App extends Component {
   render() {
     return (
-
       <Grid container direction='column'>
-			<ThemeProvider theme={theme}>
+				<ThemeProvider theme={theme}>
+		      <Grid item>
 
-        <Grid item>
-				{/*<HeaderForm />*/}
-          {/*  <Header />*/}
-        </Grid>
+		      </Grid>
 
-        <Grid item container>
-          <Grid item xs={0} sm={2} />
+		      <Grid item container>
+		        <Grid item xs={1} sm={2} />
 
-          <Grid item xs={12}>
-            <UserForm />
-          </Grid>
+		        <Grid item xs={12}>
+		          <UserForm />
+		        </Grid>
 
-          <Grid item xs={0} sm={2} />
-        </Grid>
+		        <Grid item xs={1} sm={2} />
+		      </Grid>
 				</ThemeProvider>
       </Grid>
-
     );
   }
 }

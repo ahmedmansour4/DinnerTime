@@ -1,18 +1,33 @@
 import React, { Component } from 'react'
-
 import Grid from '@material-ui/core/Grid'
 
 import { Button, Typography} from '@material-ui/core'
 import { makeStyles } from '@material-ui/styles'
+import GridList from '@material-ui/core/GridList';
+import GridListTile from '@material-ui/core/GridListTile';
+import GridListTileBar from '@material-ui/core/GridListTileBar';
 import Header from '../Header'
 
 const useStyles = makeStyles(() => ({
+		root: {
+			display: 'flex',
+    flexWrap: 'wrap',
+    justifyContent: 'space-around',
+    overflow: 'hidden',
+
+		},
+		gridList: {
+    width: 500,
+    height: 450,
+  },
     typographyStyles: {
         flex: 1
     }
 }));
 
 export class FoodSelect extends Component {
+
+
 
     continue = e => {
         e.preventDefault()
@@ -24,26 +39,31 @@ export class FoodSelect extends Component {
         this.props.prevStep()
     }
 
-		goToLeave = e => {
-			this.props.goToLogOut()
-		}
+
+    handleSubmit = input => event => {
+      console.log("food is " + input);
+      event.preventDefault();
+
+      this.props.updateFoodTypes(input);
+
+      console.log("test: ");
+      this.props.nextStep();
+
+    }
 
 		goHome = e => {
 			this.props.goHome()
 		}
 
-		getFriendList = e => {
-			this.props.getFriendList()
+		goToLeave = e => {
+			this.props.goToLogOut()
 		}
 
 		getFavorites = e => {
-			this.props.getFavorites()
+			this.props.goToFavoritesList()
 		}
 
-
-
     render() {
-        const { handleChange } = this.props
 
         return (
 					<Grid container
@@ -52,93 +72,40 @@ export class FoodSelect extends Component {
 					<Header
 					goToLogOut={this.goToLeave}
 					goHome={this.goHome}
-					getFriendList={this.getFriendList}
 					getFavorites={this.getFavorites}
 					/>
+					<div className={useStyles.root}>
             <Grid container
                 direction='column'
                 justify='center'
                 alignItems='center'
                 spacing={3}
-								maxWidth="sm"
 								style={{height: '80vh' }}
             >
-                <Grid item />
 
-                <Grid item container spacing={3} justify='center'>
-                         <Grid item xs={12} sm={7}>
-                         <Typography variant='h5' align='center' className={useStyles.typographyStyles}>
-                            Select what type of food you want.
-                        </Typography>
-                        </Grid>
-
-
-                        {/* List of Food Types */}
-                        <Grid item xs={12} sm={7}>
-                        <Button
-                            variant='contained'
-                            color="secondary"
-                            onChange={handleChange('foodTypes')}
-                            fullWidth={true}
-                        >
-                            Chinese
-                        </Button>
-                        </Grid>
-
-                        <Grid item xs={12} sm={7}>
-                        <Button
-                            variant='contained'
-                            color="secondary"
-                            onChange={handleChange('foodTypes')}
-                            fullWidth={true}
-                        >
-                            American
-                        </Button>
-                        </Grid>
-
-                        <Grid item xs={12} sm={7}>
-                        <Button
-                            variant='contained'
-                            color="secondary"
-                            onChange={handleChange('foodTypes')}
-                            fullWidth={true}
-                        >
-
-                            Mexican
-                        </Button>
-                        </Grid>
-
-                        {/* Next and Back Buttons */}
-                        <Grid item container xs={12}
-                            justify='center'
-                            alignItems='stretch'
-                            spacing={3}
-                        >
-                                <Grid item xs={6} sm={4}>
-                                <Button
+								<GridList cellHeight={80} className={useStyles.gridList}>
+                         <GridListTile cols={2} style={{ height: '10vh' }}>
+		                       <Typography variant='h5' align='center' className={useStyles.typographyStyles}>
+															Select what type of food you want.
+		                      </Typography>
+                        </GridListTile>
+                        { this.props.possibleFoodTypes.map(type =>
+                            <GridListTile >
+							    <Button
                                     variant='contained'
                                     color="secondary"
+                                    onClick={this.handleSubmit(type)}
                                     fullWidth={true}
-                                    onClick={this.goBack}
+                                    key={type}
                                 >
-                                    Back
+                                    {type}
                                 </Button>
-                                </Grid>
-
-                                <Grid item xs={6} sm={4}>
-                                <Button
-                                    variant='contained'
-                                    color="secondary"
-                                    fullWidth={true}
-                                    onClick={this.continue}
-                                >
-                                    Next
-                                </Button>
-                                </Grid>
-                        </Grid>
-                </Grid>
+                            </GridListTile>
+                        )}
+							</GridList>
             </Grid>
-						</Grid>
+						</div>
+					</Grid>
         )
     }
 }

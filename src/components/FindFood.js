@@ -5,6 +5,9 @@ import Grid from '@material-ui/core/Grid'
 import { Button, Typography} from '@material-ui/core'
 import Fastfood from '@material-ui/icons/Fastfood'
 import { makeStyles } from '@material-ui/styles'
+import CasinoIcon from '@material-ui/icons/Casino';
+import FavoriteIcon from '@material-ui/icons/Favorite';
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 
 import Header from '../Header'
 
@@ -18,39 +21,59 @@ const useStyles = makeStyles((theme) => ({
 
 export class FindFood extends Component {
 
+    componentDidMount() {
+        let currentComponent = this;
+        if ("geolocation" in navigator) {
+          console.log("Available");
+          navigator.geolocation.getCurrentPosition(function(position) {
+            console.log("Latitude is :", position.coords.latitude);
+            console.log("Longitude is :", position.coords.longitude);
+            currentComponent.props.updateLatitude(position.coords.latitude);
+            currentComponent.props.updateLongitude(position.coords.longitude);
+          });
+        } else {
+          console.log("Not Available");
+        }
+    }
+
     continue = e => {
         e.preventDefault()
         this.props.nextStep()
     }
 
-    goToAddFriends = e => {
-        e.preventDefault()
-        this.props.goToAddFriends()
+    prevStep = e => {
+        this.props.prevStep()
     }
-		/*goToLogOut = e => {
+
+    goToConfirm = e => {
         e.preventDefault()
-        this.props.goToLogOut()
-    }*/
+        this.props.goToConfirm()
+    }
 
+    goToFavoritesList = e => {
+        e.preventDefault()
+        this.props.goToFavoritesList()
+    }
 
-		goToLeave = e => {
-			this.props.goToLogOut()
-		}
+    goToFindFood = e => {
+        e.preventDefault()
+        this.props.goToFindFood()
+    }
 
 		goHome = e => {
 			this.props.goHome()
 		}
 
-		getFriendList = e => {
-			this.props.getFriendList()
+		goToLeave = e => {
+			this.props.goToLogOut()
 		}
 
 		getFavorites = e => {
-			this.props.getFavorites()
+			this.props.goToFavoritesList()
 		}
 
     render() {
-        const {values, handleChange} = this.props
+        const { handleChange} = this.props
 
         return (
 					<Grid container
@@ -59,60 +82,73 @@ export class FindFood extends Component {
 					<Header
 					goToLogOut={this.goToLeave}
 					goHome={this.goHome}
-					getFriendList={this.getFriendList}
 					getFavorites={this.getFavorites}
 					/>
-	            <Grid container
-	                direction='column'
-	                justify='center'
-	                alignItems='center'
-	                spacing={3}
-									maxWidth="sm"
-									style={{height: '80vh' }}
-	            >
-	                <Grid item />
-									<Grid item container spacing={3} justify='center'>
-		                       <Grid item xs={12} sm={7}>
-		                       <Typography variant='h3' align='center' className={useStyles.typographyStyles}>
-		                          Welcome to Dinner Time!
-		                      </Typography>
-		                      </Grid>
-													<Grid item xs={12}></Grid>
-	                        <Grid item xs={12} sm={7}>
-	                        <Button
-	                            variant='contained'
-	                            color="secondary"
-	                            fullWidth={true}
-	                            onClick={this.continue}
-	                        >
-	                            <Fastfood />
-	                        </Button>
-	                        </Grid>
+            <Grid container
+                direction='column'
+                justify='center'
+                alignItems='center'
+                spacing={3}
+								style={{height: '80vh' }}
+            >
+                <Grid item />
 
-	                        <Grid item xs={12} sm={7}>
-	                        <Button
-	                            variant='contained'
-	                            color="secondary"
-	                            onChange={handleChange('foodTypes')}
-	                            fullWidth={true}
-	                            onClick={this.continue}
-	                        >
-	                            Random
-	                        </Button>
-	                        </Grid>
-	                        <Grid item xs={12} sm={7}>
-	                        <Button
-	                            variant='contained'
-	                            color="secondary"
-	                            fullWidth={true}
-	                            onClick={this.goToAddFriends}
-	                        >
-	                            Add Friend
-	                        </Button>
-	                        </Grid>
-	                </Grid>
-	            </Grid>
-						</Grid>
+                <Grid item container spacing={3} justify='center'>
+                         <Grid item xs={12} sm={7}>
+                         <Typography variant='h3' align='center' className={useStyles.typographyStyles}>
+                            Welcome to Dinner Time!
+                        </Typography>
+                        </Grid>
+
+                        <Grid item xs={12} sm={7}>
+                        <Button
+                            variant='contained'
+                            color="secondary"
+                            fullWidth={true}
+                            onClick={this.continue}
+                            startIcon={<Fastfood />}
+                        >
+                            Dinner Time
+                        </Button>
+                        </Grid>
+
+                        <Grid item xs={12} sm={7}>
+                        <Button
+                            variant='contained'
+                            color="secondary"
+                            onChange={handleChange('foodTypes')}
+                            fullWidth={true}
+                            onClick={this.goToConfirm}
+                            startIcon={<CasinoIcon />}
+                        >
+                            Random
+                        </Button>
+                        </Grid>
+                        <Grid item xs={12} sm={7}>
+                        <Button
+                            variant='contained'
+                            color="secondary"
+                            fullWidth={true}
+                            onClick={this.goToFavoritesList}
+                            startIcon={<FavoriteIcon />}
+                        >
+                            View Favorites
+                        </Button>
+                        </Grid>
+                        <Grid item xs={12} sm={7}>
+                        <Button
+                            variant='contained'
+                            color="secondary"
+                            fullWidth={true}
+                            onClick={this.prevStep}
+                            startIcon={<ExitToAppIcon />}
+                        >
+                            Log Out
+                        </Button>
+                        </Grid>
+                </Grid>
+            </Grid>
+					</Grid>
         )
     }
 }
