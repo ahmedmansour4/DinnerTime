@@ -66,7 +66,6 @@ export class Login extends Component {
       handleSubmit = event => {
         event.preventDefault();
 
-
         // Creating a object to hold all our login info and send it to API
         const loginInfo = {
           username: this.state.username,
@@ -105,7 +104,9 @@ export class Login extends Component {
           });
 
       }
-
+			goLogIn = e => {
+				this.props.goToLogOut()
+			}
       // This render function controls what is displayed, it's all in HTML
     render() {
 				const {classes} = this.props;
@@ -113,7 +114,9 @@ export class Login extends Component {
 					<Grid container
 							direction='column'
 					>
-					<HeaderNoMenu/>
+					<HeaderNoMenu
+					goLogIn = {this.goLogIn}
+					/>
 					<Grid item style={{height: '10vh' }}/>
 					<Container component="main" maxWidth="xs">
 						<CssBaseline />
@@ -131,7 +134,6 @@ export class Login extends Component {
 								 fullWidth={true}
 								 onChange={this.handleChangeUsername}
 								 margin="normal"
-								 autoComplete="username"
 						 />
 								<TextField
 	 								 required
@@ -143,7 +145,6 @@ export class Login extends Component {
 	 								 fullWidth={true}
 	 								 onChange={this.handleChangePassword}
 									  margin="normal"
-										autoComplete="current-password"
 	 						 />
 								<Button
  									 variant='contained'

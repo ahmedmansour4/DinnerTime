@@ -103,12 +103,18 @@ export class SignUp extends Component {
 
       }
 
+			goLogIn = e => {
+				this.props.goToLogOut()
+			}
+
       render() {
         return (
 					<Grid container
 							direction='column'
 					>
-					<HeaderNoMenu/>
+					<HeaderNoMenu
+					goLogIn = {this.goLogIn}
+					/>
             <Grid container
                 direction='column'
                 justify='center'

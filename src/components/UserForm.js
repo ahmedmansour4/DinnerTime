@@ -12,7 +12,7 @@ import Result from './Result'
 export class UserForm extends Component {
 
     state = {
-        step: 0,
+        step: 1,
         emailConfirmed: false,
         username: '',
         userId: '',
@@ -153,6 +153,7 @@ export class UserForm extends Component {
                         nextStep={this.nextStep}
                         handleChange={this.handleChange}
                         value={ values }
+												goToLogOut={this.goToLogOut}
                     />
                 )
             case 0:
@@ -165,6 +166,7 @@ export class UserForm extends Component {
                         setJWT={this.setJWT}
                         setUserId={this.setUserId}
                         value={ values }
+												goToLogOut={this.goToLogOut}
                     />
                 )
             case 1:

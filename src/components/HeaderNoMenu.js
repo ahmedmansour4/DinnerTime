@@ -1,5 +1,5 @@
 import React from 'react'
-import { AppBar, Toolbar, Typography, IconButton } from '@material-ui/core'
+import { AppBar, Toolbar, Typography, Button } from '@material-ui/core'
 import { makeStyles } from '@material-ui/styles'
 import RestaurantMenuIcon from '@material-ui/icons/RestaurantMenu';
 
@@ -9,13 +9,23 @@ const useStyles = makeStyles(() => ({
     },
 }));
 
-const Header = () => {
+
+
+const Header = (props) => {
+
+	const goLogIn = (event) => {
+			event.preventDefault();
+			props.goLogIn();
+	}
+
     return (
         <AppBar position='static'>
             <Toolbar>
-						<Typography variant="h6">
+						<Button onClick={goLogIn}>
+						<Typography color="secondary" variant="h6">
 								Dinner Time
 						</Typography>
+						</Button>
             </Toolbar>
         </AppBar>
     );
