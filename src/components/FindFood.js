@@ -138,7 +138,7 @@ export class FindFood extends Component {
                         <Grid item xs={12} sm={7}>
                         <Button
                             variant='contained'
-                            color="secondary"
+                            color="primary"
                             fullWidth={true}
                             onClick={this.prevStep}
                             startIcon={<ExitToAppIcon />}
