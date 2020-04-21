@@ -148,7 +148,7 @@ export class Login extends Component {
 	 						 />
 								<Button
  									 variant='contained'
- 									 color="secondary"
+ 									 color="primary"
  									 fullWidth={true}
  									 onClick={this.handleSubmit}
 									 className={classes.submit}
