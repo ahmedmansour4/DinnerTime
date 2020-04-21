@@ -160,7 +160,7 @@ export class Login extends Component {
 									color="secondary"
 									fullWidth={true}
 									onClick={this.prevStep}
-									className={classes.submit}
+									
 							>
 									Sign Up
 							</Button>
